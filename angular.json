@@ -20,7 +20,7 @@
             "main": "apps/app/src/main.ts",
             "polyfills": "apps/app/src/polyfills.ts",
             "tsConfig": "apps/app/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": ["apps/app/src/favicon.ico", "apps/app/src/assets"],
             "styles": ["apps/app/src/styles.scss"],
             "scripts": []
@@ -38,7 +38,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
