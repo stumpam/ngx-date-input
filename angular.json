@@ -119,10 +119,49 @@
           }
         }
       }
+    },
+    "ngx-date-input": {
+      "projectType": "library",
+      "root": "libs/ngx-date-input",
+      "sourceRoot": "libs/ngx-date-input/src",
+      "prefix": "ngx-date-input",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/ngx-date-input/tsconfig.lib.json",
+            "project": "libs/ngx-date-input/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ngx-date-input/tsconfig.lib.json",
+              "libs/ngx-date-input/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ngx-date-input/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ngx-date-input/jest.config.js",
+            "tsConfig": "libs/ngx-date-input/tsconfig.spec.json",
+            "setupFile": "libs/ngx-date-input/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/angular"
+    "defaultCollection": "@nrwl/angular",
+    "analytics": "9cc627f0-620b-45e3-9d9d-fb2ea88b8f59"
   },
   "schematics": {
     "@nrwl/angular:application": {

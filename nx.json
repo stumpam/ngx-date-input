@@ -17,6 +17,9 @@
     "app-e2e": {
       "tags": [],
       "implicitDependencies": ["app"]
+    },
+    "ngx-date-input": {
+      "tags": []
     }
   }
 }
