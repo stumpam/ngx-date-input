@@ -2,5 +2,6 @@
   <h1>Welcome to {{ title }}!</h1>
 </header>
 <main>
-  <ngx-date-input></ngx-date-input>
+  <ngx-date-input [formControl]="ctrl" format="d. M. yyyy"></ngx-date-input>
+  <ngx-date-input [formControl]="ctrl" format="yyyy-MM-dd"></ngx-date-input>
 </main>
