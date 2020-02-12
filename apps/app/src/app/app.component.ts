@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
 export class AppComponent implements OnInit {
   title = 'Ngx-Date-Input';
 
-  ctrl = new FormControl('123');
+  ctrl = new FormControl('');
 
   ngOnInit() {
     this.ctrl.valueChanges.subscribe(val => console.log(`appCmp: ${val}`));
