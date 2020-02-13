@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -33,13 +32,12 @@ export const DATE_INPUT_VALUE_ACCESSOR: any = {
     '(click)': 'onClick()',
     '[attr.disabled]': 'disabled',
     '(input)': 'onInput($event.target.value)',
-    '(blur)': 'onBlur()',
+    '(keydown)': 'onKeyDown($event)',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DATE_INPUT_VALUE_ACCESSOR],
 })
-export class DateInputComponent
-  implements ControlValueAccessor, OnDestroy, AfterViewInit {
+export class DateInputComponent implements ControlValueAccessor, OnDestroy {
   @ViewChild('field', { static: true }) field: ElementRef<HTMLInputElement>;
 
   @Input() tokens: TokenConfig = {
@@ -76,8 +74,10 @@ export class DateInputComponent
 
   @Input() set format(format: string) {
     this.sections = parseString(format, this.tokens);
-    console.log(this.sections);
   }
+
+  @Input() max = '';
+  @Input() min = '';
 
   get cursorPosition() {
     return this.field.nativeElement.selectionStart;
@@ -86,6 +86,7 @@ export class DateInputComponent
   sections: Token[] = [];
   prevValue = '';
   date: Date | undefined;
+  prevDate: Date | undefined;
 
   private readonly destroy$ = new Subject<void>();
   touchedFn: any = null;
@@ -101,13 +102,8 @@ export class DateInputComponent
     this.renderer.setProperty(this.field.nativeElement, 'value', obj);
   }
 
-  ngAfterViewInit() {
-    console.log(this.field);
-  }
-
   registerOnChange(fn: any): void {
     this.changeFn = fn;
-    console.log(fn);
   }
 
   registerOnTouched(fn: any): void {
@@ -123,20 +119,69 @@ export class DateInputComponent
     this.touchedFn?.();
   }
 
-  onBlur() {
-    if (!this.date) {
-      alert('blur');
+  onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Delete') {
+      event.preventDefault();
+    }
+    if (
+      event.key === 'Backspace' &&
+      this.cursorPosition !== this.field.nativeElement.value.length
+    ) {
+      event.preventDefault();
+    }
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+      event.preventDefault();
+      this.updateSection(event.key);
     }
   }
 
+  updateSection(key: 'ArrowUp' | 'ArrowDown') {
+    if (!this.date) return;
+
+    let pos = this.cursorPosition;
+    let right = pos;
+    let index = 0;
+    let active = true;
+
+    const value = this.sections.reduce((str, section) => {
+      let sectionValue = section.value;
+      if (active && pos >= index && pos <= section.value.length + index) {
+        if (section.role !== TokenRole.divider) {
+          const orig = +section.value;
+          let num = key === 'ArrowUp' ? orig + 1 : orig - 1;
+
+          if (num > section.max) num--;
+          if (num < section.min) num++;
+
+          sectionValue = num
+            .toString()
+            .padStart(section.leadingZero ? 2 : 1, '0');
+
+          pos = index;
+          right = index + sectionValue.length;
+
+          active = false;
+        } else {
+          pos = pos + 1;
+        }
+      }
+      index = index + section.value.length;
+      return str + sectionValue;
+    }, '');
+
+    this.onInput(value);
+    this.field.nativeElement.setSelectionRange(pos, right);
+  }
+
   onInput(value: string) {
-    console.log(value);
     const back = this.prevValue.length > value.length;
 
-    this.getSection(value, 0, back);
+    if (!value) {
+      this.sections[0].value = '';
+      this.sections[0].valid = false;
+    }
 
-    value = this.buildString();
-    console.log(this.sections);
+    this.getSection(value, 0, back);
 
     const { year, month, day } = this.sections.reduce(
       (prev, curr) => {
@@ -148,37 +193,36 @@ export class DateInputComponent
       },
       { day: '', month: '', year: '' },
     );
-    console.log(year, month, day);
 
+    let checkedDay = day;
     if (year && month && day) {
-      this.date = new Date(`${year}-${month}-${day}`);
+      const date = new Date(+year, +month, 0).getDate();
+      if (+day > date) {
+        const section = this.sections.find(s => s.role === TokenRole.day);
+        section.value = date.toString();
+        checkedDay = section.value;
+      }
+    }
+
+    if (year && month && checkedDay) {
+      this.prevDate = this.date;
+      this.date = new Date(`${year}-${month}-${checkedDay}`);
     } else {
+      this.prevDate = this.date;
       this.date = undefined;
     }
-    console.log(this.date);
 
+    value = this.buildString();
     this.writeValue(value);
 
-    // if (index === -1) {
-    //   this.writeValue(value.slice(0, -1));
-    //   return;
-    // }
-
-    // const token = this.sections[index];
-    // if (token.type === TokenType.pattern) {
-    // }
-
-    // if (token.type === TokenType.divider) {
-    //   value = value.slice(0, -1) + token.pattern + value.slice(-1);
-    //   this.writeValue(value);
-    // }
+    if (this.date !== this.prevDate) {
+      this.changeFn?.(this.date || null);
+    }
 
     this.prevValue = value;
-    this.changeFn?.(value);
   }
 
   getSection(value: string, index: number, back: boolean) {
-    // debugger
     const section = this.sections[index];
 
     const last = index === this.sections.length - 1;
@@ -190,7 +234,12 @@ export class DateInputComponent
     const actual = (extra && value.slice(0, actualLength)) || value;
 
     if (section.role === TokenRole.divider) {
-      section.value = section.pattern;
+      if (back && !extra) {
+        section.value = '';
+        this.sections[index + 1].value = '';
+      } else {
+        section.value = section.pattern;
+      }
       if (!section.pattern.startsWith(actual)) {
         if (!isNaN(+actual)) {
           extra = actual + extra;
@@ -201,7 +250,10 @@ export class DateInputComponent
           prevSection.leadingZero &&
           prevSection.value.length !== prevSection.pattern.length
         ) {
-          prevSection.value = '0' + prevSection.value;
+          if (+prevSection.value < prevSection.min) {
+            prevSection.value = prevSection.min.toString();
+          }
+          prevSection.value = prevSection.value.padStart(2, '0');
         }
       }
     } else {
@@ -219,20 +271,10 @@ export class DateInputComponent
         } else {
           section.value = number;
         }
-        if (
+        section.valid =
           actualLength === section.value.length ||
           (section.leadingZero === false &&
-            section.value.length === actualLength - 1)
-        ) {
-          console.log(
-            actualLength === section.value.length,
-            section,
-            section.leadingZero === false,
-            section.leadingZero === false &&
-              section.value.length === actualLength - 1,
-          );
-          section.valid = true;
-        }
+            section.value.length === actualLength - 1);
       } else {
         if (extra !== this.sections[index + 1]?.pattern[0]) {
           extra = '';
