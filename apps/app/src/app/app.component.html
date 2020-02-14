@@ -4,5 +4,6 @@
 <main>
   <ngx-date-input [formControl]="ctrl" format="d. M. yyyy"></ngx-date-input>
   <ngx-date-input [formControl]="ctrl" format="yyyy-MM-dd"></ngx-date-input>
-  <ngx-date-input [formControl]="ctrl" format="d. M. yyyy" min="2020-01-01"></ngx-date-input>
+  <ngx-date-input [formControl]="ctrl" format="yyyy-MM-dd" min="2020-01-01" max="2020-12-31"></ngx-date-input>
+  <ngx-date-input [formControl]="ctrl" format="d. M. yyyy" min="2020-01-01" max="2020-12-31" [iso]="true"></ngx-date-input>
 </main>
