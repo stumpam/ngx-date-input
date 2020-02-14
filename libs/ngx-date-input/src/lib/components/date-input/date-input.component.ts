@@ -8,6 +8,7 @@ import {
   OnDestroy,
   Renderer2,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -26,15 +27,18 @@ export const DATE_INPUT_VALUE_ACCESSOR: any = {
 
 @Component({
   selector: 'ngx-date-input',
-  template: '<input #field>',
+  template: '<input #field><div (click)="resetInput()">X</div>',
+  styleUrls: ['./date-input.component.scss'],
   // tslint:disable-next-line: no-host-metadata-property
   host: {
     '(click)': 'onClick()',
     '[attr.disabled]': 'disabled',
     '(input)': 'onInput($event.target.value)',
     '(keydown)': 'onKeyDown($event)',
+    '[class.ngx-date-input]': 'true',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
   providers: [DATE_INPUT_VALUE_ACCESSOR],
 })
 export class DateInputComponent implements ControlValueAccessor, OnDestroy {
@@ -78,9 +82,14 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
 
   @Input() max = '';
   @Input() min = '';
+  @Input() iso = false;
 
   get cursorPosition() {
     return this.field.nativeElement.selectionStart;
+  }
+
+  get cursorPositionEnd() {
+    return this.field.nativeElement.selectionEnd;
   }
 
   sections: Token[] = [];
@@ -98,7 +107,18 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
     private renderer: Renderer2,
   ) {}
 
-  writeValue(obj: any): void {
+  setDate(date: Date) {
+    this.prevDate = date;
+    this.updateDateSection(date, true);
+    const value = this.buildString();
+    this.onInput(value);
+  }
+
+  writeValue(obj: string | Date): void {
+    if (obj instanceof Date) {
+      this.setDate(obj);
+      return;
+    }
     this.renderer.setProperty(this.field.nativeElement, 'value', obj);
   }
 
@@ -116,17 +136,34 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
   }
 
   onClick() {
+    this.updateSection('none');
     this.touchedFn?.();
   }
 
   onKeyDown(event: KeyboardEvent) {
     if (event.key === 'Delete') {
+      if (
+        this.cursorPosition === 0 &&
+        this.cursorPositionEnd === this.field.nativeElement.value.length
+      ) {
+        this.min ? this.setDate(new Date(this.min)) : this.onInput('');
+
+        return;
+      }
       event.preventDefault();
     }
     if (
       event.key === 'Backspace' &&
       this.cursorPosition !== this.field.nativeElement.value.length
     ) {
+      if (
+        this.cursorPosition === 0 &&
+        this.cursorPositionEnd === this.field.nativeElement.value.length
+      ) {
+        this.min ? this.setDate(new Date(this.min)) : this.onInput('');
+
+        return;
+      }
       event.preventDefault();
     }
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
@@ -135,7 +172,7 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
     }
   }
 
-  updateSection(key: 'ArrowUp' | 'ArrowDown') {
+  updateSection(key: 'ArrowUp' | 'ArrowDown' | 'none') {
     if (!this.date) return;
 
     let pos = this.cursorPosition;
@@ -147,15 +184,17 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
       let sectionValue = section.value;
       if (active && pos >= index && pos <= section.value.length + index) {
         if (section.role !== TokenRole.divider) {
-          const orig = +section.value;
-          let num = key === 'ArrowUp' ? orig + 1 : orig - 1;
+          if (key !== 'none') {
+            const orig = +section.value;
+            let num = key === 'ArrowUp' ? orig + 1 : orig - 1;
 
-          if (num > section.max) num--;
-          if (num < section.min) num++;
+            if (num > section.max) num--;
+            if (num < section.min) num++;
 
-          sectionValue = num
-            .toString()
-            .padStart(section.leadingZero ? 2 : 1, '0');
+            sectionValue = num
+              .toString()
+              .padStart(section.leadingZero ? 2 : 1, '0');
+          }
 
           pos = index;
           right = index + sectionValue.length;
@@ -169,11 +208,23 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
       return str + sectionValue;
     }, '');
 
-    this.onInput(value);
+    if (key !== 'none') {
+      this.onInput(value);
+    }
     this.field.nativeElement.setSelectionRange(pos, right);
   }
 
-  onInput(value: string) {
+  onInput(value: string | Date) {
+    if (!value || (typeof value === 'string' && value.length === 1)) {
+      this.resetSections();
+    }
+
+    if (value instanceof Date) {
+      this.setDate(value);
+
+      return;
+    }
+
     const back = this.prevValue.length > value.length;
 
     if (!value) {
@@ -212,14 +263,64 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
       this.date = undefined;
     }
 
-    value = this.buildString();
-    this.writeValue(value);
+    if (this.min && this.date && new Date(this.min) > this.date) {
+      this.updateDateSection(new Date(this.min));
+    }
 
+    if (this.max && this.date && new Date(this.max) < this.date) {
+      this.updateDateSection(new Date(this.max));
+    }
+
+    value = this.buildString();
+    this.updateValue(value);
+  }
+
+  updateValue(value: string) {
+    this.writeValue(value);
     if (this.date !== this.prevDate) {
-      this.changeFn?.(this.date || null);
+      this.changeFn?.(
+        (this.date &&
+          (this.iso
+            ? new Date(
+                this.date.getTime() - this.date.getTimezoneOffset() * 60000,
+              )
+                .toISOString()
+                .split('T')[0]
+            : this.date)) ||
+          null,
+      );
     }
 
     this.prevValue = value;
+  }
+
+  resetSections() {
+    this.sections.map(s => {
+      s.value = '';
+      if (s.valid) {
+        s.valid = false;
+      }
+    });
+  }
+
+  updateDateSection(newDate: Date, addDivider = false) {
+    this.sections.map(s => {
+      if (s.role === TokenRole.day) {
+        s.value = newDate
+          .getDate()
+          .toString()
+          .padStart(s.leadingZero ? 2 : 1, '0');
+      } else if (s.role === TokenRole.month) {
+        s.value = (newDate.getMonth() + 1)
+          .toString()
+          .padStart(s.leadingZero ? 2 : 1, '0');
+      } else if (s.role === TokenRole.year) {
+        s.value = newDate.getFullYear().toString();
+      }
+      if (addDivider && s.role === TokenRole.divider) {
+        s.value = s.pattern;
+      }
+    });
   }
 
   getSection(value: string, index: number, back: boolean) {
@@ -259,7 +360,6 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
     } else {
       const { value: number, extra: numberExtra } = this.parseNumber(actual);
       extra = numberExtra + extra;
-
       if (number) {
         if (section.min > number && actualLength === number.length) {
           section.value = section.min.toString();
@@ -270,6 +370,9 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
           }
         } else {
           section.value = number;
+          if (extra && +section.value < section.min) {
+            section.value = section.min.toString();
+          }
         }
         section.valid =
           actualLength === section.value.length ||
@@ -315,6 +418,10 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
     while (value && x < 100) {
       x++;
     }
+  }
+
+  resetInput() {
+    this.onInput('');
   }
 
   ngOnDestroy() {
