@@ -1,0 +1,41 @@
+.ngx-date-input-calendar {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  z-index: 10000;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  padding: 5px;
+
+  .row {
+    display: flex;
+
+  }
+
+  .cell {
+    display: flex;
+    width: 25px;
+    height: 25px;
+    justify-content: center;
+    align-items: center;
+    margin: 1px;
+    border: 1px solid transparent;
+
+    &:hover {
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    &.today {
+      background-color: #006699;
+    }
+
+    &.selected {
+      border-color: red;
+    }
+
+    &.not-active {
+      color: #ccc;
+    }
+  }
+}

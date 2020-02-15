@@ -1,0 +1,5 @@
+<input #field>
+<div class="close" (click)="resetInput()">X</div>
+<img src="*" (click)="openCalendar()">
+<ngx-date-input-calendar *ngIf="showCalendar" (selectionChange)="calendarEvent($event)" [date]="date">
+</ngx-date-input-calendar>

@@ -1,0 +1,5 @@
+<div *ngFor="let week of dates" class="row">
+  <div class="cell" *ngFor="let day of week" (click)="emitDate(day)" [class]="getClass(day)">
+    {{ day.getDate() }}
+  </div>
+</div>

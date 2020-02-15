@@ -27,7 +27,7 @@ export const DATE_INPUT_VALUE_ACCESSOR: any = {
 
 @Component({
   selector: 'ngx-date-input',
-  template: '<input #field><div (click)="resetInput()">X</div>',
+  templateUrl: './date-input.component.html',
   styleUrls: ['./date-input.component.scss'],
   // tslint:disable-next-line: no-host-metadata-property
   host: {
@@ -83,6 +83,8 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
   @Input() max = '';
   @Input() min = '';
   @Input() iso = false;
+
+  showCalendar = false;
 
   get cursorPosition() {
     return this.field.nativeElement.selectionStart;
@@ -422,6 +424,17 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
 
   resetInput() {
     this.onInput('');
+  }
+
+  openCalendar() {
+    this.showCalendar = true;
+    this.cd.markForCheck();
+  }
+
+  calendarEvent(date: Date) {
+    this.setDate(date);
+    this.showCalendar = false;
+    this.cd.markForCheck();
   }
 
   ngOnDestroy() {
