@@ -2,8 +2,8 @@
   <h1>Welcome to {{ title }}!</h1>
 </header>
 <main>
-  <ngx-date-input [formControl]="ctrl" format="d. M. yyyy"></ngx-date-input>
-  <ngx-date-input [formControl]="ctrl" format="yyyy-MM-dd"></ngx-date-input>
-  <ngx-date-input [formControl]="ctrl" format="yyyy-MM-dd" min="2020-01-01" max="2020-12-31"></ngx-date-input>
-  <ngx-date-input [formControl]="ctrl" format="d. M. yyyy" min="2020-01-01" max="2020-12-31" [iso]="true"></ngx-date-input>
+  <ngx-date-input [formControl]="ctrl" [options]="options1"></ngx-date-input>
+  <ngx-date-input [formControl]="ctrl" [options]="options2"></ngx-date-input>
+  <ngx-date-input [formControl]="ctrl" [options]="options3"></ngx-date-input>
+  <ngx-date-input [formControl]="ctrl" [options]="options4"></ngx-date-input>
 </main>
