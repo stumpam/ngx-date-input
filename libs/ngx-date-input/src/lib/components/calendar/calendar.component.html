@@ -1,5 +1,30 @@
-<div *ngFor="let week of dates" class="row">
-  <div class="cell" *ngFor="let day of week" (click)="emitDate(day)" [class]="getClass(day)">
-    {{ day.getDate() }}
+<ng-container [ngTemplateOutlet]="view === 'month' ? month : view === 'year' ? year : decade"></ng-container>
+
+<ng-template #month>
+  <div class="ngx-dic top-bar">
+    <div class="ngx-dic" (click)="changeMonth(false)" *ngIf="showMonth(false)"><i class="ngx-dic prev"></i></div>
+    <div class="ngx-dic active-month">
+      <span (click)="toggleView('year')" class="ngx-dic">{{ months[activeMonth.getMonth()] }}</span>
+      <span (click)="toggleView('decade')" class="ngx-dic">{{ activeMonth.getFullYear() }}</span>
+    </div>
+    <div class="ngx-dic to-today" (click)="toToday()"></div>
+    <div class="ngx-dic" (click)="changeMonth()" *ngIf="showMonth()"><i class="ngx-dic next"></i></div>
   </div>
-</div>
+  <div class="ngx-dic row">
+    <div class="ngx-dic cell days disabled" *ngFor="let day of days">{{day}}</div>
+  </div>
+  <div *ngFor="let week of dates" class="row">
+    <div class="ngx-dic cell" [class.disabled]="!showDate(day) || notActive(day)" *ngFor="let day of week"
+      (click)="emitDate(day)" [class]="getClass(day)">
+      {{ showDate(day) }}
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #year>
+  year
+</ng-template>
+
+<ng-template #decade>
+  decade
+</ng-template>

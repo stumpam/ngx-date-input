@@ -14,6 +14,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 
 import {
+  DateInputOptions,
   Token,
   TokenConfig,
   TokenRole,
@@ -43,8 +44,27 @@ export const DATE_INPUT_VALUE_ACCESSOR: any = {
 })
 export class DateInputComponent implements ControlValueAccessor, OnDestroy {
   @ViewChild('field', { static: true }) field: ElementRef<HTMLInputElement>;
+  @Input() set options(options: DateInputOptions) {
+    this.format = options.format;
+    this._options = options;
+    this.iso = !!options.iso;
 
-  @Input() tokens: TokenConfig = {
+    if (options.tokens) {
+      this.tokens = options.tokens;
+    }
+
+    if (options.min) {
+      this.min = options.min;
+    }
+
+    if (options.max) {
+      this.max = options.max;
+    }
+  }
+
+  _options: DateInputOptions = {} as DateInputOptions;
+
+  tokens: TokenConfig = {
     yyyy: {
       min: 1900,
       max: 2100,
@@ -76,13 +96,13 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
     },
   };
 
-  @Input() set format(format: string) {
+  set format(format: string) {
     this.sections = parseString(format, this.tokens);
   }
 
-  @Input() max = '';
-  @Input() min = '';
-  @Input() iso = false;
+  max = '';
+  min = '';
+  iso = false;
 
   showCalendar = false;
 
@@ -106,7 +126,8 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
 
   constructor(
     private readonly cd: ChangeDetectorRef,
-    private renderer: Renderer2,
+    private readonly renderer: Renderer2,
+    private readonly el: ElementRef,
   ) {}
 
   setDate(date: Date) {
@@ -426,8 +447,8 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
     this.onInput('');
   }
 
-  openCalendar() {
-    this.showCalendar = true;
+  openCalendar(show = true) {
+    this.showCalendar = show;
     this.cd.markForCheck();
   }
 

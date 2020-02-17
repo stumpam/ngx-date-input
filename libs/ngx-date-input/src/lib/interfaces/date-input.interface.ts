@@ -23,3 +23,17 @@ export const enum TokenRole {
   month,
   year,
 }
+
+export interface DateInputOptions {
+  tokens?: TokenConfig;
+  format: string;
+  min?: string;
+  max?: string;
+  disableWeekends?: boolean;
+  hideOtherMonths?: boolean;
+  iso?: boolean;
+  months?: string[];
+  days?: string[];
+}
+
+export type CalendarView = 'month' | 'year' | 'decade';
