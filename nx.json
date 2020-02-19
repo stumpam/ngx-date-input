@@ -1,5 +1,5 @@
 {
-  "npmScope": "ngx-date-input",
+  "npmScope": "@stumpam",
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": {
