@@ -11,6 +11,11 @@
   .top-bar {
     display: flex;
 
+    .year {
+      flex: 1;
+      text-align: center;
+    }
+
     .active-month {
       flex: 1;
       text-align: center;
@@ -64,8 +69,8 @@
 
   .cell {
     display: flex;
-    width: 25px;
     height: 25px;
+    min-width: 25px;
     justify-content: center;
     align-items: center;
     margin: 1px;
@@ -90,6 +95,10 @@
 
     &.days {
       color: black;
+    }
+
+    &.year, &.decade {
+      min-width: 70px;
     }
   }
 }

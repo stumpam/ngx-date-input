@@ -100,8 +100,10 @@ export class CalendarComponent implements OnInit {
       const activeWeek: Date[] = [];
       let dayCount = 7;
 
-      const lastDayInWeek5 = this.dates?.[4]?.[6].getMonth();
-      if (lastDayInWeek5 && lastDayInWeek5 !== month) {
+      const lastDayInWeek5 = normalizeDate(this.dates?.[4]?.[6].toUTCString());
+      lastDayInWeek5?.setDate(lastDayInWeek5.getDate() + 1);
+
+      if (lastDayInWeek5 && lastDayInWeek5.getMonth() !== month) {
         break;
       }
 
@@ -135,22 +137,57 @@ export class CalendarComponent implements OnInit {
     this.cd.markForCheck();
   }
 
+  changeYear(next = true) {
+    const nextYear = next ? 1 : -1;
+    this.activeMonth.setFullYear(this.activeMonth.getFullYear() + nextYear);
+    this.cd.markForCheck();
+  }
+
+  changeDecade(next = true) {
+    const nextYear = next ? 7 : -7;
+    this.activeMonth.setFullYear(this.activeMonth.getFullYear() + nextYear);
+    this.cd.markForCheck();
+  }
+
   toToday() {
     this.activeMonth = new Date(this.today);
     this.generateMonth(this.today);
-    this.cd.markForCheck();
+    this.toggleView('month');
+  }
+
+  setDate(date: Date) {
+    if (this.notActive(date)) {
+      return;
+    }
+
+    if (this.isNotActiveMonth(date)) {
+      this.activeMonth = date;
+    }
+    this.selectionChange.emit(date);
+  }
+
+  setMonth(month: number) {
+    if (this.notActiveMonth(month)) {
+      return;
+    }
+
+    this.activeMonth.setMonth(month);
+    this.generateMonth(this.activeMonth);
+    this.toggleView('month');
+  }
+
+  setYear(year: number) {
+    if (this.notActiveYear(year)) {
+      return;
+    }
+
+    this.activeMonth.setFullYear(year);
+    this.toggleView('year');
   }
 
   toggleView(view: CalendarView) {
     this.view = view;
     this.cd.markForCheck();
-  }
-
-  emitDate(date: Date) {
-    if (this.isNotActiveMonth(date)) {
-      this.activeMonth = date;
-    }
-    this.selectionChange.emit(date);
   }
 
   hide(target: HTMLElement) {
@@ -170,8 +207,7 @@ export class CalendarComponent implements OnInit {
 
   showMonth(next = true) {
     if (next && this.options.max) {
-      const max = new Date(this.options.max);
-      max.setHours(0, 0, 0, 0);
+      const max = normalizeDate(this.options.max);
       const active = new Date(
         this.activeMonth.getFullYear(),
         this.activeMonth.getMonth() + 1,
@@ -183,8 +219,7 @@ export class CalendarComponent implements OnInit {
       }
     }
     if (!next && this.options.min) {
-      const min = new Date(this.options.min);
-      min.setHours(0, 0, 0, 0);
+      const min = normalizeDate(this.options.min);
 
       const active = new Date(
         this.activeMonth.getFullYear(),
@@ -192,6 +227,29 @@ export class CalendarComponent implements OnInit {
         0,
       );
       active.setHours(0, 0, 0, 0);
+      if (active.getTime() < min.getTime()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  showYear(next = true) {
+    if (next && this.options.max) {
+      const max = normalizeDate(this.options.max);
+      const active = normalizeDate(
+        new Date(this.activeMonth.getFullYear() + 1, 0, 1),
+      );
+      if (active.getTime() > max.getTime()) {
+        return false;
+      }
+    }
+    if (!next && this.options.min) {
+      const min = normalizeDate(this.options.min);
+
+      const active = normalizeDate(
+        new Date(this.activeMonth.getFullYear(), 0, 0),
+      );
       if (active.getTime() < min.getTime()) {
         return false;
       }
@@ -214,8 +272,7 @@ export class CalendarComponent implements OnInit {
       }
     }
     if (this.options.max) {
-      const max = new Date(this.options.max);
-      max.setHours(0, 0, 0, 0);
+      const max = normalizeDate(new Date(this.options.max));
       if (date.getTime() > max.getTime()) {
         return true;
       }
@@ -223,14 +280,56 @@ export class CalendarComponent implements OnInit {
     return false;
   }
 
+  notActiveMonth(month: number) {
+    if (this.options.min) {
+      const min = normalizeDate(this.options.min);
+      if (month < min.getMonth()) {
+        return true;
+      }
+    }
+
+    if (this.options.max) {
+      const max = normalizeDate(this.options.max);
+      if (month > max.getMonth()) {
+        return true;
+      }
+    }
+  }
+
+  notActiveYear(year: number) {
+    if (this.options.min) {
+      const min = normalizeDate(this.options.min);
+      if (year < min.getFullYear()) {
+        return true;
+      }
+    }
+
+    if (this.options.max) {
+      const max = normalizeDate(this.options.max);
+      if (year > max.getFullYear()) {
+        return true;
+      }
+    }
+  }
+
   showToday() {
     if (this.options.min) {
       const min = normalizeDate(this.options.min);
-      
+      if (this.today.getTime() < min.getTime()) {
+        return false;
+      }
     }
     if (this.options.max) {
+      const max = normalizeDate(this.options.max);
+      if (this.today.getTime() > max.getTime()) {
+        return false;
+      }
     }
     return true;
+  }
+
+  fadeDate(date: Date) {
+    return this.activeMonth.getMonth() !== date.getMonth();
   }
 
   showDate(date: Date) {
@@ -241,8 +340,16 @@ export class CalendarComponent implements OnInit {
   }
 }
 
-const normalizeDate = (date: string) => {
-  const normalizedDate = new Date(date);
+const normalizeDate = (date: string | Date) => {
+  if (!date) return;
+
+  let normalizedDate: Date;
+
+  if (typeof date === 'string') {
+    normalizedDate = new Date(date);
+  } else {
+    normalizedDate = date;
+  }
   normalizedDate.setHours(0, 0, 0, 0);
 
   return normalizedDate;
