@@ -13,11 +13,12 @@ export class AppComponent implements OnInit {
   ctrl = new FormControl(new Date());
 
   options1: DateInputOptions = { format: 'd. M. yyyy' };
-  options2: DateInputOptions = { format: 'yyyy-MM-dd' };
+  options2: DateInputOptions = { format: 'yyyy-MM-dd', image: '*' };
   options3: DateInputOptions = {
     format: 'yyyy-MM-dd',
     min: '2020-01-01',
     max: '2020-12-31',
+    image: '*',
   };
   options4: DateInputOptions = {
     format: 'd. M. yyyy',
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit {
     iso: true,
     disableWeekends: true,
     hideOtherMonths: true,
+    image: '*',
   };
 
   ngOnInit() {
