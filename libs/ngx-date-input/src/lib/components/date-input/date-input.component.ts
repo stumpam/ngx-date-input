@@ -19,6 +19,7 @@ import {
   TokenConfig,
   TokenRole,
 } from '../../interfaces/date-input.interface';
+import { normalizeDate } from '../../functions/date.functions';
 
 export const DATE_INPUT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -303,9 +304,7 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
       this.changeFn?.(
         (this.date &&
           (this.iso
-            ? new Date(
-                this.date.getTime() - this.date.getTimezoneOffset() * 60000,
-              )
+            ? normalizeDate(this.date)
                 .toISOString()
                 .split('T')[0]
             : this.date)) ||
@@ -343,6 +342,8 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
         s.value = s.pattern;
       }
     });
+
+    this.date = newDate;
   }
 
   getSection(value: string, index: number, back: boolean) {
@@ -395,13 +396,19 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
           if (extra && +section.value < section.min) {
             section.value = section.min.toString();
           }
+          if (back && !last && section.valid) {
+            this.sections[index + 1].value = '';
+          }
         }
         section.valid =
           actualLength === section.value.length ||
           (section.leadingZero === false &&
             section.value.length === actualLength - 1);
       } else {
-        if (extra !== this.sections[index + 1]?.pattern[0]) {
+        if (
+          extra !== this.sections[index + 1]?.pattern[0] ||
+          (!back && !Number.isNaN(+extra[0]) && !section.valid)
+        ) {
           extra = '';
         }
       }
@@ -413,8 +420,10 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
       section.leadingZero === false
     ) {
       section.value = section.value.replace(/^0/, '');
+      console.log(last, extra, section);
       if (!last && !extra) {
         extra = this.sections[index + 1].pattern[0];
+        console.log(extra);
       }
     }
 
