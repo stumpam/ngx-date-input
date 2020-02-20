@@ -9,6 +9,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
+import { normalizeDate } from '../../functions/date.functions';
 import {
   CalendarView,
   DateInputOptions,
@@ -339,18 +340,3 @@ export class CalendarComponent implements OnInit {
       : date.getDate();
   }
 }
-
-const normalizeDate = (date: string | Date) => {
-  if (!date) return;
-
-  let normalizedDate: Date;
-
-  if (typeof date === 'string') {
-    normalizedDate = new Date(date);
-  } else {
-    normalizedDate = date;
-  }
-  normalizedDate.setHours(0, 0, 0, 0);
-
-  return normalizedDate;
-};
