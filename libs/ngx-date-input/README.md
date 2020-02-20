@@ -40,11 +40,11 @@ or with custom image (svg)
 options4: DateInputOptions = {
   // valid date types d/dd, M/MM, yyyy and any dividers between
   format: 'd. M. yyyy',
-  // minimal date in YYYY-MM-dd format
+  // minimal date in yyyy-MM-dd format
   min: '2020-03-10',
-  // maximum date in YYYY-MM-dd format
+  // maximum date in yyyy-MM-dd format
   max: '2020-04-10',
-  // bolean whether datepicker returns Date object or YYYY-MM-dd format
+  // bolean whether datepicker returns Date object or yyyy-MM-dd format
   iso: true,
   // Disables weekends fo pick fromcalendar
   disableWeekends: true,
