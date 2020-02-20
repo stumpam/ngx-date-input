@@ -1,5 +1,5 @@
-<input #field type="string">
-<div class="close" (click)="resetInput()">X</div>
+<input #field type="string" [disabled]="disabled">
+<div class="close" (click)="resetInput()">×</div>
 <ng-container [ngTemplateOutlet]="_options?.image ? image: content">
 </ng-container>
 

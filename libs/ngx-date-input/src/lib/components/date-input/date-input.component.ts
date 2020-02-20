@@ -33,7 +33,6 @@ export const DATE_INPUT_VALUE_ACCESSOR: any = {
   // tslint:disable-next-line: no-host-metadata-property
   host: {
     '(click)': 'onClick()',
-    '[attr.disabled]': 'disabled',
     '(input)': 'onInput($event.target.value)',
     '(keydown)': 'onKeyDown($event)',
     '[class.ngx-date-input]': 'true',
