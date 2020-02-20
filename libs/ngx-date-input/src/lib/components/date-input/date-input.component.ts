@@ -420,10 +420,8 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
       section.leadingZero === false
     ) {
       section.value = section.value.replace(/^0/, '');
-      console.log(last, extra, section);
       if (!last && !extra) {
         extra = this.sections[index + 1].pattern[0];
-        console.log(extra);
       }
     }
 
