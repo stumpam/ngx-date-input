@@ -13,13 +13,13 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 
+import { normalizeDate } from '../../functions/date.functions';
 import {
   DateInputOptions,
   Token,
   TokenConfig,
   TokenRole,
 } from '../../interfaces/date-input.interface';
-import { normalizeDate } from '../../functions/date.functions';
 
 export const DATE_INPUT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -313,14 +313,9 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
   updateValue(value: string) {
     this.updateView(value);
     if (this.date !== this.prevDate) {
+      this.date.setHours((-1 * this.date.getTimezoneOffset()) / 60, 0, 0, 0);
       this.changeFn?.(
-        (this.date &&
-          (this.iso
-            ? normalizeDate(this.date)
-                .toISOString()
-                .split('T')[0]
-            : this.date)) ||
-          null,
+        (this.date && (this.iso ? dateToISO(this.date) : this.date)) || null,
       );
     }
 
@@ -532,4 +527,11 @@ const parseString = (str: string, tokens: TokenConfig) => {
   }, 0);
 
   return tks;
+};
+
+const dateToISO = (date: Date) => {
+  const month = (date.getMonth() + 1).toString();
+  return `${date.getFullYear()}-${
+    month.length === 1 ? '0' + month : month
+  }-${date.getDate()}`;
 };
