@@ -65,12 +65,12 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
   _options: DateInputOptions = {} as DateInputOptions;
 
   tokens: TokenConfig = {
-    yyyy: {
+    YYYY: {
       min: 1900,
       max: 2100,
       role: TokenRole.year,
     },
-    dd: {
+    DD: {
       min: 1,
       max: 31,
       role: TokenRole.day,
@@ -82,7 +82,7 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
       role: TokenRole.month,
       leadingZero: true,
     },
-    d: {
+    D: {
       min: 1,
       max: 31,
       role: TokenRole.day,
