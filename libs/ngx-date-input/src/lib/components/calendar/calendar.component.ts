@@ -35,7 +35,7 @@ export class CalendarComponent implements OnInit {
   @Output() selectionChange = new EventEmitter();
   @Output() hideCalendar = new EventEmitter();
 
-  today = new Date();
+  today = normalizeDate(new Date());
   dates: Date[][] = [];
   activeMonth = new Date();
   skipVisibility = true;
@@ -63,21 +63,23 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     if (this.options.min) {
-      const min = new Date(this.options.min);
-      min.setHours(0, 0, 0, 0);
-      if (this.date.getTime() < min.getTime()) {
+      const min = normalizeDate(new Date(this.options.min));
+
+      if (this.date?.getTime() < min.getTime()) {
         this.date = min;
       }
     }
     if (this.options.max) {
-      const max = new Date(this.options.max);
-      max.setHours(0, 0, 0, 0);
-      if (this.date.getTime() > max.getTime()) {
+      const max = normalizeDate(new Date(this.options.max));
+      if (this.date?.getTime() > max.getTime()) {
         this.date = max;
       }
     }
-    this.activeMonth = this.date ? new Date(this.date) : new Date();
-    this.today.setHours(0, 0, 0, 0);
+    this.activeMonth = this.date
+      ? new Date(this.date)
+      : this.options.min
+      ? new Date(this.options.min)
+      : new Date();
     this.date?.setHours(0, 0, 0, 0);
     this.generateMonth(this.date ? this.date : this.activeMonth);
     if (this.options.months) {

@@ -139,9 +139,15 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
 
   writeValue(obj: string | Date): void {
     if (obj instanceof Date) {
-      this.setDate(obj);
-      return;
+      return this.setDate(obj);
     }
+
+    if (obj === null) {
+      this.showCalendar = false;
+      this.cd.markForCheck();
+      return this.onInput('');
+    }
+
     this.renderer.setProperty(this.field.nativeElement, 'value', obj);
   }
 
