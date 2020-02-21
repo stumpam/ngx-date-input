@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/stumpam/ngx-date-input/compare/v1.1.0...v1.1.1) (2020-02-21)
+
+
+### Bug Fixes
+
+* **lib:** emitted ISO date was smaller by 1 ([1f1f620](https://github.com/stumpam/ngx-date-input/commit/1f1f620947f752690c82b736f6ffe6ea0d9f439d)), closes [#6](https://github.com/stumpam/ngx-date-input/issues/6)
+* **lib:** handle correctly input in ISO string ([33ccf01](https://github.com/stumpam/ngx-date-input/commit/33ccf0121ba4e16ea7be4030371bbe2596cf7cb6)), closes [#7](https://github.com/stumpam/ngx-date-input/issues/7)
+* **lib:** handle correctly null date in calendar popup ([6df66b1](https://github.com/stumpam/ngx-date-input/commit/6df66b17fb401584f8bf6dfaac428841b67ce8e9)), closes [#4](https://github.com/stumpam/ngx-date-input/issues/4)
+* **lib:** make lib pattern letter moment.js compliant ([821a293](https://github.com/stumpam/ngx-date-input/commit/821a293bb45aaff10b9b104df053c022fbf8b9e5)), closes [#3](https://github.com/stumpam/ngx-date-input/issues/3)
+
 ## [1.1.0](https://github.com/stumpam/ngx-date-input/compare/v1.0.0...v1.1.0) (2020-02-20)
 
 
