@@ -137,9 +137,13 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
     this.onInput(value);
   }
 
-  writeValue(obj: string | Date): void {
+  writeValue(obj: string | Date | null): void {
     if (obj instanceof Date) {
       return this.setDate(obj);
+    }
+
+    if (typeof obj === 'string') {
+      return this.setDate(normalizeDate(new Date(obj)));
     }
 
     if (obj === null) {
@@ -147,8 +151,10 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
       this.cd.markForCheck();
       return this.onInput('');
     }
+  }
 
-    this.renderer.setProperty(this.field.nativeElement, 'value', obj);
+  updateView(string: string) {
+    this.renderer.setProperty(this.field.nativeElement, 'value', string);
   }
 
   registerOnChange(fn: any): void {
@@ -305,7 +311,7 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
   }
 
   updateValue(value: string) {
-    this.writeValue(value);
+    this.updateView(value);
     if (this.date !== this.prevDate) {
       this.changeFn?.(
         (this.date &&
