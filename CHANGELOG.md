@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.2](https://github.com/stumpam/ngx-date-input/compare/v1.1.1...v1.1.2) (2020-02-26)
+
+
+### Bug Fixes
+
+* **lib:** fix setHours of null date ([2163208](https://github.com/stumpam/ngx-date-input/commit/2163208d223b836100a48d4e91b64b733d6003c7)), closes [#8](https://github.com/stumpam/ngx-date-input/issues/8)
+
 ### [1.1.1](https://github.com/stumpam/ngx-date-input/compare/v1.1.0...v1.1.1) (2020-02-21)
 
 
