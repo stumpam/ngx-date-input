@@ -313,7 +313,7 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
   updateValue(value: string) {
     this.updateView(value);
     if (this.date !== this.prevDate) {
-      this.date.setHours((-1 * this.date.getTimezoneOffset()) / 60, 0, 0, 0);
+      this.date?.setHours((-1 * this.date.getTimezoneOffset()) / 60, 0, 0, 0);
       this.changeFn?.(
         (this.date && (this.iso ? dateToISO(this.date) : this.date)) || null,
       );
