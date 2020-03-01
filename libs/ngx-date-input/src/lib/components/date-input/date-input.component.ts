@@ -533,5 +533,5 @@ const dateToISO = (date: Date) => {
   const month = (date.getMonth() + 1).toString();
   return `${date.getFullYear()}-${
     month.length === 1 ? '0' + month : month
-  }-${date.getDate()}`;
+  }-${date.getDate().toString().padStart(2, '0')}`;
 };
