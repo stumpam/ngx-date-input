@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.3](https://github.com/stumpam/ngx-date-input/compare/v1.1.2...v1.1.3) (2020-03-01)
+
+
+### Bug Fixes
+
+* **lib:** iso date output with leading zero ([50be2b2](https://github.com/stumpam/ngx-date-input/commit/50be2b2b5ea55f1752e40ab0e52e37f15fcab0d6)), closes [#9](https://github.com/stumpam/ngx-date-input/issues/9)
+
 ### [1.1.2](https://github.com/stumpam/ngx-date-input/compare/v1.1.1...v1.1.2) (2020-02-26)
 
 
