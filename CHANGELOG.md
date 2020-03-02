@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/stumpam/ngx-date-input/compare/v1.1.3...v1.2.0) (2020-03-02)
+
+
+### Features
+
+* **demo:** add ngx-formly to demo ([95668e1](https://github.com/stumpam/ngx-date-input/commit/95668e199f340b181885d6d1a9294b008424ca60))
+* **lib:** bind attributes directly to input element ([8596f3a](https://github.com/stumpam/ngx-date-input/commit/8596f3ab1031f0e3baf4e7bf80ee8f30c1372f1f))
+
 ### [1.1.3](https://github.com/stumpam/ngx-date-input/compare/v1.1.2...v1.1.3) (2020-03-01)
 
 
