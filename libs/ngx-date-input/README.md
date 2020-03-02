@@ -4,6 +4,8 @@ Angular Date picker with masked input.
 
 Demo: [https://stackblitz.com/edit/ngx-date-input](https://stackblitz.com/edit/ngx-date-input)
 
+> Known issue: requires Angular 9+ (Ivy renderer) so styles will work correctly.
+
 ## Quick Start
 
 1. Import NgxDateInputModule to your project.
@@ -38,13 +40,13 @@ or with custom image (svg)
 
 ```typescript
 options4: DateInputOptions = {
-  // valid date types d/dd, M/MM, yyyy and any dividers between
-  format: 'd. M. yyyy',
-  // minimal date in yyyy-MM-dd format
+  // valid date types D/DD, M/MM, YYYY and any dividers between
+  format: 'D. M. YYYY',
+  // minimal date in YYYY-MM-DD format
   min: '2020-03-10',
-  // maximum date in yyyy-MM-dd format
+  // maximum date in YYYY-MM-DD format
   max: '2020-04-10',
-  // bolean whether datepicker returns Date object or yyyy-MM-dd format
+  // bolean whether datepicker returns Date object or YYYY-MM-DD format
   iso: true,
   // Disables weekends fo pick fromcalendar
   disableWeekends: true,
@@ -54,3 +56,26 @@ options4: DateInputOptions = {
   image: '*',
 };
 ```
+
+### Works with [formly](https://formly.dev)
+
+If you want to add attributes directly to input element make custom Formly field and initialize it on `ngOnInit`
+
+```typescript
+ngOnInit() {
+    this.attributes = {
+      id: this.id,
+      ...this.to.attributes,
+    };
+  }
+```
+
+and use it in the template
+
+```HTML
+<ngx-date-input [formControl]="formControl" [options]="to.dateOptions" [attributes]="attributes"></ngx-date-input>
+```
+
+> ⚠ Caution
+>
+> Attributes are bound just once on ngOnIput hook. Changes are matter of future improvements.
