@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 import { DateInputOptions } from '@stumpam/ngx-date-input';
 
 @Component({
@@ -30,7 +31,25 @@ export class AppComponent implements OnInit {
     image: '*',
   };
 
+  form = new FormGroup({});
+  model = {};
+  fields: FormlyFieldConfig[] = [
+    {
+      key: 'date',
+      type: 'date',
+      templateOptions: {
+        label: 'Date',
+        required: true,
+        attributes: {
+          inputmode: 'double',
+        },
+        dateOptions: { format: 'D. M. YYYY' },
+      },
+    },
+  ];
+
   ngOnInit() {
     this.ctrl.valueChanges.subscribe(val => console.log(`appCmp: ${val}`));
+    this.form.valueChanges.subscribe(val => console.log('formly: ', val));
   }
 }
