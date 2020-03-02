@@ -6,6 +6,7 @@ import {
   forwardRef,
   Input,
   OnDestroy,
+  OnInit,
   Renderer2,
   ViewChild,
   ViewEncapsulation,
@@ -42,8 +43,10 @@ export const DATE_INPUT_VALUE_ACCESSOR: any = {
   encapsulation: ViewEncapsulation.None,
   providers: [DATE_INPUT_VALUE_ACCESSOR],
 })
-export class DateInputComponent implements ControlValueAccessor, OnDestroy {
+export class DateInputComponent
+  implements ControlValueAccessor, OnInit, OnDestroy {
   @ViewChild('field', { static: true }) field: ElementRef<HTMLInputElement>;
+  @Input() attributes = {};
   @Input() set options(options: DateInputOptions) {
     this.format = options.format;
     this._options = options;
@@ -129,6 +132,16 @@ export class DateInputComponent implements ControlValueAccessor, OnDestroy {
     private readonly renderer: Renderer2,
     private readonly el: ElementRef,
   ) {}
+
+  ngOnInit() {
+    Object.entries(this.attributes).forEach(([attr, value]) => {
+      this.renderer.setAttribute(
+        this.field.nativeElement,
+        attr,
+        value.toString(),
+      );
+    });
+  }
 
   setDate(date: Date) {
     this.prevDate = date;
@@ -533,5 +546,8 @@ const dateToISO = (date: Date) => {
   const month = (date.getMonth() + 1).toString();
   return `${date.getFullYear()}-${
     month.length === 1 ? '0' + month : month
-  }-${date.getDate().toString().padStart(2, '0')}`;
+  }-${date
+    .getDate()
+    .toString()
+    .padStart(2, '0')}`;
 };
