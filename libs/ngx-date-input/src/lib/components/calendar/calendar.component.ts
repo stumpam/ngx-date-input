@@ -286,14 +286,20 @@ export class CalendarComponent implements OnInit {
   notActiveMonth(month: number) {
     if (this.options.min) {
       const min = normalizeDate(this.options.min);
-      if (month < min.getMonth()) {
+      if (
+        this.activeMonth.getFullYear() === min.getFullYear() &&
+        month < min.getMonth()
+      ) {
         return true;
       }
     }
 
     if (this.options.max) {
       const max = normalizeDate(this.options.max);
-      if (month > max.getMonth()) {
+      if (
+        this.activeMonth.getFullYear() === max.getFullYear() &&
+        month > max.getMonth()
+      ) {
         return true;
       }
     }
