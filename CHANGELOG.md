@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/stumpam/ngx-date-input/compare/v1.2.0...v1.3.0) (2020-03-05)
+
+
+### Features
+
+* **demo:** update demos ([255009b](https://github.com/stumpam/ngx-date-input/commit/255009b0c4002e8c20e91cee04a8c1b059979866))
+* **lib:** make other moth's days highlitable if possible ([7ff2805](https://github.com/stumpam/ngx-date-input/commit/7ff280524d43af1596e16668ca3dd5e92668fcbb)), closes [#11](https://github.com/stumpam/ngx-date-input/issues/11)
+* **lib:** min and max dates can be Date objects ([ad26f8b](https://github.com/stumpam/ngx-date-input/commit/ad26f8b005d755430cd5ec2b55eba1cc88d3dbcf))
+
+
+### Bug Fixes
+
+* **lib&:** monthly view checks current year ([d87c20d](https://github.com/stumpam/ngx-date-input/commit/d87c20d05afe45875ce0484e25a03513fcd6fd51)), closes [#10](https://github.com/stumpam/ngx-date-input/issues/10)
+
 ## [1.2.0](https://github.com/stumpam/ngx-date-input/compare/v1.1.3...v1.2.0) (2020-03-02)
 
 
