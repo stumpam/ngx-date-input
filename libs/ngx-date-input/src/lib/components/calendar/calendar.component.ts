@@ -338,7 +338,17 @@ export class CalendarComponent implements OnInit {
   }
 
   fadeDate(date: Date) {
-    return this.activeMonth.getMonth() !== date.getMonth();
+    return (
+      this.options.disableOtherMonths &&
+      this.activeMonth.getMonth() !== date.getMonth()
+    );
+  }
+
+  fadedDate(date: Date) {
+    return (
+      !this.options.disableOtherMonths &&
+      this.activeMonth.getMonth() !== date.getMonth()
+    );
   }
 
   showDate(date: Date) {
