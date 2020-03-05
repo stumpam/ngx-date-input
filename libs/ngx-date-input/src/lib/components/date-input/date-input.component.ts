@@ -103,8 +103,8 @@ export class DateInputComponent
     this.sections = parseString(format, this.tokens);
   }
 
-  max = '';
-  min = '';
+  max: string | Date = '';
+  min: string | Date = '';
   iso = false;
 
   showCalendar = false;

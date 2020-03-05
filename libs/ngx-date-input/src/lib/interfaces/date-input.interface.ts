@@ -27,8 +27,8 @@ export const enum TokenRole {
 export interface DateInputOptions {
   tokens?: TokenConfig;
   format: string;
-  min?: string;
-  max?: string;
+  min?: string | Date;
+  max?: string | Date;
   disableWeekends?: boolean;
   hideOtherMonths?: boolean;
   iso?: boolean;
