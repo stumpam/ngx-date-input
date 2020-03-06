@@ -4,8 +4,6 @@ Angular Date picker with masked input.
 
 Demo: [https://stackblitz.com/edit/ngx-date-input](https://stackblitz.com/edit/ngx-date-input)
 
-> Known issue: requires Angular 9+ (Ivy renderer) so styles will work correctly.
-
 ## Quick Start
 
 1. Import NgxDateInputModule to your project.
