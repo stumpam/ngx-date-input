@@ -15,6 +15,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 
 import { normalizeDate } from '../../functions/date.functions';
+import { padStart } from '../../functions/format.functions';
 import {
   DateInputOptions,
   Token,
@@ -239,9 +240,7 @@ export class DateInputComponent
             if (num > section.max) num--;
             if (num < section.min) num++;
 
-            sectionValue = num
-              .toString()
-              .padStart(section.leadingZero ? 2 : 1, '0');
+            sectionValue = padStart(num, section.leadingZero ? 2 : 1);
           }
 
           pos = index;
@@ -347,14 +346,9 @@ export class DateInputComponent
   updateDateSection(newDate: Date, addDivider = false) {
     this.sections.map(s => {
       if (s.role === TokenRole.day) {
-        s.value = newDate
-          .getDate()
-          .toString()
-          .padStart(s.leadingZero ? 2 : 1, '0');
+        s.value = padStart(newDate.getDate(), s.leadingZero ? 2 : 1);
       } else if (s.role === TokenRole.month) {
-        s.value = (newDate.getMonth() + 1)
-          .toString()
-          .padStart(s.leadingZero ? 2 : 1, '0');
+        s.value = padStart(newDate.getMonth() + 1, s.leadingZero ? 2 : 1, '0');
       } else if (s.role === TokenRole.year) {
         s.value = newDate.getFullYear().toString();
       }
@@ -397,7 +391,7 @@ export class DateInputComponent
           if (+prevSection.value < prevSection.min) {
             prevSection.value = prevSection.min.toString();
           }
-          prevSection.value = prevSection.value.padStart(2, '0');
+          prevSection.value = padStart(prevSection.value, 2);
         }
       }
     } else {
@@ -405,7 +399,7 @@ export class DateInputComponent
       extra = numberExtra + extra;
       if (number) {
         if (section.min > number && actualLength === number.length) {
-          section.value = section.min.toString();
+          section.value = padStart(section.min, section.leadingZero ? 2 : 1);
         } else if (section.max < number) {
           section.value = section.max.toString();
           if (!last && !extra) {
@@ -414,7 +408,7 @@ export class DateInputComponent
         } else {
           section.value = number;
           if (extra && +section.value < section.min) {
-            section.value = section.min.toString();
+            section.value = padStart(section.min, section.leadingZero ? 2 : 1);
           }
           if (back && !last && section.valid) {
             this.sections[index + 1].value = '';
@@ -546,8 +540,5 @@ const dateToISO = (date: Date) => {
   const month = (date.getMonth() + 1).toString();
   return `${date.getFullYear()}-${
     month.length === 1 ? '0' + month : month
-  }-${date
-    .getDate()
-    .toString()
-    .padStart(2, '0')}`;
+  }-${padStart(date.getDate(), 2)}`;
 };
