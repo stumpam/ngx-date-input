@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/stumpam/ngx-date-input/compare/v1.3.0...v1.4.0) (2020-03-06)
+
+
+### Features
+
+* **lib:** use custom padStart fn ([2e2446c](https://github.com/stumpam/ngx-date-input/commit/2e2446cff4eb480874f71350b80f1903dc1f6b2f))
+
 ## [1.3.0](https://github.com/stumpam/ngx-date-input/compare/v1.2.0...v1.3.0) (2020-03-05)
 
 
