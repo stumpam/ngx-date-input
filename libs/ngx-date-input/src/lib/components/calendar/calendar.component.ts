@@ -66,13 +66,13 @@ export class CalendarComponent implements OnInit {
       const min = normalizeDate(new Date(this.options.min));
 
       if (this.date?.getTime() < min.getTime()) {
-        this.date = min;
+        this.activeMonth = min;
       }
     }
     if (this.options.max) {
       const max = normalizeDate(new Date(this.options.max));
       if (this.date?.getTime() > max.getTime()) {
-        this.date = max;
+        this.activeMonth = max;
       }
     }
     this.activeMonth = this.date
