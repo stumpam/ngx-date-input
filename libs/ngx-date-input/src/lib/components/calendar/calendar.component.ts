@@ -69,12 +69,14 @@ export class CalendarComponent implements OnInit {
         this.activeMonth = min;
       }
     }
+
     if (this.options.max) {
       const max = normalizeDate(new Date(this.options.max));
       if (this.date?.getTime() > max.getTime()) {
         this.activeMonth = max;
       }
     }
+
     this.activeMonth = this.date
       ? new Date(this.date)
       : this.options.min
@@ -82,11 +84,17 @@ export class CalendarComponent implements OnInit {
       : new Date();
     this.date?.setHours(0, 0, 0, 0);
     this.generateMonth(this.date ? this.date : this.activeMonth);
+
     if (this.options.months) {
       this.months = this.options.months;
     }
+
     if (this.options.days) {
       this.days = this.options.days;
+    }
+
+    if (this.options.view) {
+      this.view = this.options.view;
     }
   }
 

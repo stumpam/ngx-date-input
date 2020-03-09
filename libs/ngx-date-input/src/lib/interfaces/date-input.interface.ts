@@ -36,6 +36,7 @@ export interface DateInputOptions {
   days?: string[];
   image?: string;
   disableOtherMonths?: boolean;
+  view?: CalendarView;
 }
 
 export type CalendarView = 'month' | 'year' | 'decade';
