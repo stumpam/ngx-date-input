@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/stumpam/ngx-date-input/compare/v1.4.1...v1.5.0) (2020-03-09)
+
+
+### Features
+
+* **lib:** default view can be set in options ([81c7f22](https://github.com/stumpam/ngx-date-input/commit/81c7f223dfdba1af48298362949f5653122b56a9))
+
+
+### Bug Fixes
+
+* **lib:** calendar view show currect month instead of min ([60fc75f](https://github.com/stumpam/ngx-date-input/commit/60fc75fc91b6131f78b98501c133bc4cb19f33ad)), closes [#12](https://github.com/stumpam/ngx-date-input/issues/12)
+
 ### [1.4.1](https://github.com/stumpam/ngx-date-input/compare/v1.4.0...v1.4.1) (2020-03-07)
 
 
