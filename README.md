@@ -52,6 +52,8 @@ options4: DateInputOptions = {
   hideOtherMonths: true,
   // Path to image of calendar, when not set it will use ng-content
   image: '*',
+  // Sets default view of calendare component. Month shows month dates, year show month per selected year, decade shows 9 followin years in grid
+  view: 'month' | 'year' | 'decade',
 };
 ```
 

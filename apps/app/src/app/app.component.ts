@@ -13,8 +13,17 @@ export class AppComponent implements OnInit {
 
   ctrl = new FormControl(new Date());
 
-  options1: DateInputOptions = { format: 'D. M. YYYY', min: '2020-01-10' };
-  options2: DateInputOptions = { format: 'YYYY-MM-DD', image: '*' };
+  options1: DateInputOptions = {
+    format: 'D. M. YYYY',
+    min: '2020-01-10',
+    view: 'year',
+  };
+  options2: DateInputOptions = {
+    format: 'YYYY-MM-DD',
+    max: '2000-12-31',
+    image: '*',
+    view: 'decade',
+  };
   options3: DateInputOptions = {
     format: 'YYYY-MM-DD',
     min: '2020-01-10',
