@@ -57,13 +57,8 @@ export class DateInputComponent
       this.tokens = options.tokens;
     }
 
-    if (options.min) {
-      this.min = options.min;
-    }
-
-    if (options.max) {
-      this.max = options.max;
-    }
+    this.min = options.min;
+    this.max = options.max;
   }
 
   _options: DateInputOptions = {} as DateInputOptions;
