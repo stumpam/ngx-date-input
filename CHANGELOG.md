@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/stumpam/ngx-date-input/compare/v1.5.0...v1.6.0) (2020-03-10)
+
+
+### Features
+
+* **lib:** add classes to previous / next buttons ([58822ed](https://github.com/stumpam/ngx-date-input/commit/58822eda91d7a0d480477616cdd146fa64c9a0cb)), closes [#14](https://github.com/stumpam/ngx-date-input/issues/14)
+
+
+### Bug Fixes
+
+* **lib:** min, max are updated even if undefined ([47c8ec7](https://github.com/stumpam/ngx-date-input/commit/47c8ec7e68e1ead6f681ebb9024fbb6f9789cc11)), closes [#15](https://github.com/stumpam/ngx-date-input/issues/15)
+
 ## [1.5.0](https://github.com/stumpam/ngx-date-input/compare/v1.4.1...v1.5.0) (2020-03-09)
 
 
