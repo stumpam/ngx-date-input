@@ -1,67 +1,145 @@
-<ng-container [ngTemplateOutlet]="view === 'month' ? month : view === 'year' ? year : decade">
+<ng-container
+    [ngTemplateOutlet]="
+        view === 'month' ? month : view === 'year' ? year : decade
+    "
+>
 </ng-container>
 
 <ng-template #month>
-  <div class="ngx-dic top-bar">
-    <div class="ngx-dic" (click)="changeMonth(false)" *ngIf="showMonth(false)">
-      <i class="ngx-dic prev"></i></div>
-    <div class="ngx-dic active-month">
-      <span (click)="toggleView('year')" class="ngx-dic">{{ months[activeMonth.getMonth()] }}</span>
-      <span (click)="toggleView('decade')" class="ngx-dic">{{ activeMonth.getFullYear() }}</span>
+    <div class="ngx-dic top-bar">
+        <div
+            class="ngx-dic ngx-dic-prev"
+            (click)="changeMonth(false)"
+            *ngIf="showMonth(false)"
+        >
+            <i class="ngx-dic prev"></i>
+        </div>
+        <div class="ngx-dic active-month">
+            <span (click)="toggleView('year')" class="ngx-dic">
+                {{ months[activeMonth.getMonth()] }}
+            </span>
+            <span (click)="toggleView('decade')" class="ngx-dic">
+                {{ activeMonth.getFullYear() }}
+            </span>
+        </div>
+        <div
+            class="ngx-dic to-today"
+            (click)="toToday()"
+            *ngIf="showToday()"
+        ></div>
+        <div
+            class="ngx-dic ngx-dic-next"
+            (click)="changeMonth()"
+            *ngIf="showMonth()"
+        >
+            <i class="ngx-dic next"></i>
+        </div>
     </div>
-    <div class="ngx-dic to-today" (click)="toToday()" *ngIf="showToday()"></div>
-    <div class="ngx-dic" (click)="changeMonth()" *ngIf="showMonth()"><i class="ngx-dic next"></i></div>
-  </div>
-  <div class="ngx-dic row">
-    <div class="ngx-dic cell days disabled" *ngFor="let day of days">{{day}}
+    <div class="ngx-dic row">
+        <div class="ngx-dic cell days disabled" *ngFor="let day of days">
+            {{ day }}
+        </div>
     </div>
-  </div>
-  <div *ngFor="let week of dates" class="row">
-    <div class="ngx-dic cell"
-      [ngClass]="{disabled: !showDate(day) || notActive(day) || fadeDate(day), faded: fadedDate(day)}"
-      *ngFor="let day of week" (click)="setDate(day)" [class]="getClass(day)">
-      {{ showDate(day) }}
+    <div *ngFor="let week of dates" class="row">
+        <div
+            class="ngx-dic cell"
+            [ngClass]="{
+                disabled: !showDate(day) || notActive(day) || fadeDate(day),
+                faded: fadedDate(day)
+            }"
+            *ngFor="let day of week"
+            (click)="setDate(day)"
+            [class]="getClass(day)"
+        >
+            {{ showDate(day) }}
+        </div>
     </div>
-  </div>
 </ng-template>
 
 <ng-template #year>
-  <div class="ngx-dic top-bar">
-    <div class="ngx-dic" (click)="changeYear(false)" *ngIf="showYear(false)">
-      <i class="ngx-dic prev"></i></div>
-    <div class="ngx-dic active-month">
-      <span (click)="toggleView('decade')" class="ngx-dic">{{ activeMonth.getFullYear() }}</span>
+    <div class="ngx-dic top-bar">
+        <div
+            class="ngx-dic ngx-dic-prev"
+            (click)="changeYear(false)"
+            *ngIf="showYear(false)"
+        >
+            <i class="ngx-dic prev"></i>
+        </div>
+        <div class="ngx-dic active-month">
+            <span (click)="toggleView('decade')" class="ngx-dic">
+                {{ activeMonth.getFullYear() }}
+            </span>
+        </div>
+        <div
+            class="ngx-dic to-today"
+            (click)="toToday()"
+            *ngIf="showToday()"
+        ></div>
+        <div
+            class="ngx-dic ngx-dic-next"
+            (click)="changeYear()"
+            *ngIf="showYear()"
+        >
+            <i class="ngx-dic next"></i>
+        </div>
     </div>
-    <div class="ngx-dic to-today" (click)="toToday()" *ngIf="showToday()"></div>
-    <div class="ngx-dic" (click)="changeYear()" *ngIf="showYear()"><i class="ngx-dic next"></i></div>
-  </div>
-  <div class="ngx-dic row" *ngFor="let i of [0,1,2,3]">
-    <div class="ngx-dic cell year" [class.disabled]="notActiveMonth(z)" *ngFor="let z of [3 * i, 3 * i + 1, 3 * i + 2]"
-      (click)="setMonth(z)">
-      {{ months[z] }}</div>
-  </div>
+    <div class="ngx-dic row" *ngFor="let i of [0, 1, 2, 3]">
+        <div
+            class="ngx-dic cell year"
+            [class.disabled]="notActiveMonth(z)"
+            *ngFor="let z of [3 * i, 3 * i + 1, 3 * i + 2]"
+            (click)="setMonth(z)"
+        >
+            {{ months[z] }}
+        </div>
+    </div>
 </ng-template>
 
 <ng-template #decade>
-  <div class="ngx-dic top-bar">
-    <div class="ngx-dic" (click)="changeDecade(false)" *ngIf="showYear(false)">
-      <i class="ngx-dic prev"></i>
-    </div>
+    <div class="ngx-dic top-bar">
+        <div
+            class="ngx-dic ngx-dic-prev"
+            (click)="changeDecade(false)"
+            *ngIf="showDecade(false)"
+        >
+            <i class="ngx-dic prev"></i>
+        </div>
 
-    <div class="ngx-dic year">
-      <span (click)="toggleView('decade')" class="ngx-dic">{{ activeMonth.getFullYear() - 3 }} -
-        {{ activeMonth.getFullYear() + 3 }}</span>
-    </div>
+        <div class="ngx-dic year">
+            <span (click)="toggleView('decade')" class="ngx-dic">
+                {{ activeMonth.getFullYear() - 4 }} -
+                {{ activeMonth.getFullYear() + 4 }}
+            </span>
+        </div>
 
-    <div class="ngx-dic to-today" (click)="toToday()" *ngIf="showToday()"></div>
+        <div
+            class="ngx-dic to-today"
+            (click)="toToday()"
+            *ngIf="showToday()"
+        ></div>
 
-    <div class="ngx-dic" (click)="changeDecade()" *ngIf="showYear()"><i class="ngx-dic next"></i>
+        <div
+            class="ngx-dic ngx-dic-next"
+            (click)="changeDecade()"
+            *ngIf="showDecade()"
+        >
+            <i class="ngx-dic next"></i>
+        </div>
     </div>
-  </div>
-  <div class="ngx-dic row" *ngFor="let i of [-1,0,1]">
-    <div class="ngx-dic cell decade" [class.disabled]="notActiveYear(z)"
-      *ngFor="let z of [ 2 * i - 1 + activeMonth.getFullYear(), 2 * i + activeMonth.getFullYear(), 2 * i + 1 + activeMonth.getFullYear() ]"
-      (click)="setYear(z)">
-      {{ z }}</div>
-  </div>
+    <div class="ngx-dic row" *ngFor="let i of [-3, 0, 3]">
+        <div
+            class="ngx-dic cell decade"
+            [class.disabled]="notActiveYear(z)"
+            *ngFor="
+                let z of [
+                    i - 1 + activeMonth.getFullYear(),
+                    i + activeMonth.getFullYear(),
+                    i + 1 + activeMonth.getFullYear()
+                ]
+            "
+            (click)="setYear(z)"
+        >
+            {{ z }}
+        </div>
+    </div>
 </ng-template>

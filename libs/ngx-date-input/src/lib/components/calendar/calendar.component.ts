@@ -268,6 +268,29 @@ export class CalendarComponent implements OnInit {
     return true;
   }
 
+  showDecade(next = true) {
+    if (next && this.options.max) {
+      const max = normalizeDate(this.options.max);
+      const active = normalizeDate(
+        new Date(this.activeMonth.getFullYear() + 5, 0, 1),
+      );
+      if (active.getTime() > max.getTime()) {
+        return false;
+      }
+    }
+    if (!next && this.options.min) {
+      const min = normalizeDate(this.options.min);
+
+      const active = normalizeDate(
+        new Date(this.activeMonth.getFullYear() - 4, 0, 0),
+      );
+      if (active.getTime() < min.getTime()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   notActive(date: Date) {
     if (this.options.disableWeekends) {
       const weekDay = date.getDay();
