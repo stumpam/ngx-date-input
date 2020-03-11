@@ -64,16 +64,15 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
     if (this.options.min) {
       const min = normalizeDate(new Date(this.options.min));
-
-      if (this.date?.getTime() < min.getTime()) {
-        this.activeMonth = min;
+      if (!this.date || this.date?.getTime() < min.getTime()) {
+        this.date = min;
       }
     }
 
     if (this.options.max) {
       const max = normalizeDate(new Date(this.options.max));
-      if (this.date?.getTime() > max.getTime()) {
-        this.activeMonth = max;
+      if (!this.date || this.date?.getTime() > max.getTime()) {
+        this.date = max;
       }
     }
 
