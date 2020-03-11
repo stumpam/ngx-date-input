@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
     format: 'D. M. YYYY',
     min: '2020-01-10',
     view: 'year',
+    showInactiveArrows: true,
   };
   options2: DateInputOptions = {
     format: 'YYYY-MM-DD',

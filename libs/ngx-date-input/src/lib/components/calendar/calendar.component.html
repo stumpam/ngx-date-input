@@ -10,7 +10,8 @@
         <div
             class="ngx-dic ngx-dic-prev"
             (click)="changeMonth(false)"
-            *ngIf="showMonth(false)"
+            [class.disabled]="options.showInactiveArrows && !showMonth(false)"
+            *ngIf="options.showInactiveArrows || showMonth(false)"
         >
             <i class="ngx-dic prev"></i>
         </div>
@@ -30,7 +31,8 @@
         <div
             class="ngx-dic ngx-dic-next"
             (click)="changeMonth()"
-            *ngIf="showMonth()"
+            [class.disabled]="options.showInactiveArrows && !showMonth()"
+            *ngIf="options.showInactiveArrows || showMonth()"
         >
             <i class="ngx-dic next"></i>
         </div>
@@ -61,7 +63,8 @@
         <div
             class="ngx-dic ngx-dic-prev"
             (click)="changeYear(false)"
-            *ngIf="showYear(false)"
+            [class.disabled]="options.showInactiveArrows && !showYear(false)"
+            *ngIf="options.showInactiveArrows || showYear(false)"
         >
             <i class="ngx-dic prev"></i>
         </div>
@@ -78,7 +81,8 @@
         <div
             class="ngx-dic ngx-dic-next"
             (click)="changeYear()"
-            *ngIf="showYear()"
+            [class.disabled]="options.showInactiveArrows && !showYear()"
+            *ngIf="options.showInactiveArrows || showYear()"
         >
             <i class="ngx-dic next"></i>
         </div>
@@ -100,7 +104,8 @@
         <div
             class="ngx-dic ngx-dic-prev"
             (click)="changeDecade(false)"
-            *ngIf="showDecade(false)"
+            [class.disabled]="options.showInactiveArrows && !showDecade(false)"
+            *ngIf="options.showInactiveArrows || showDecade(false)"
         >
             <i class="ngx-dic prev"></i>
         </div>
@@ -121,7 +126,8 @@
         <div
             class="ngx-dic ngx-dic-next"
             (click)="changeDecade()"
-            *ngIf="showDecade()"
+            [class.disabled]="options.showInactiveArrows && !showDecade()"
+            *ngIf="options.showInactiveArrows || showDecade()"
         >
             <i class="ngx-dic next"></i>
         </div>

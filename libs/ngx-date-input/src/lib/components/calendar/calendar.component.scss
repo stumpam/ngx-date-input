@@ -54,6 +54,11 @@
       cursor: pointer;
     }
 
+    .disabled .prev {
+      border-color: gray;
+      cursor: default;
+    }
+
     .prev {
       transform: rotate(135deg);
     }
@@ -89,7 +94,8 @@
       border-color: red;
     }
 
-    &.disabled, &.faded {
+    &.disabled,
+    &.faded {
       color: #ccc;
     }
 
@@ -97,7 +103,8 @@
       color: black;
     }
 
-    &.year, &.decade {
+    &.year,
+    &.decade {
       min-width: 70px;
     }
   }

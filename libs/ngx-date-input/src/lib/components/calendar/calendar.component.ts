@@ -141,6 +141,8 @@ export class CalendarComponent implements OnInit {
   }
 
   changeMonth(next = true) {
+    if (!this.showMonth(next)) return;
+
     const nextMonth = next ? 1 : -1;
     this.activeMonth.setMonth(this.activeMonth.getMonth() + nextMonth);
     this.generateMonth(this.activeMonth);
@@ -148,12 +150,16 @@ export class CalendarComponent implements OnInit {
   }
 
   changeYear(next = true) {
+    if (!this.showYear(next)) return;
+
     const nextYear = next ? 1 : -1;
     this.activeMonth.setFullYear(this.activeMonth.getFullYear() + nextYear);
     this.cd.markForCheck();
   }
 
   changeDecade(next = true) {
+    if (!this.showDecade(next)) return;
+
     const nextYear = next ? 7 : -7;
     this.activeMonth.setFullYear(this.activeMonth.getFullYear() + nextYear);
     this.cd.markForCheck();
