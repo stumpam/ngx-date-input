@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/stumpam/ngx-date-input/compare/v1.6.0...v1.7.0) (2020-03-11)
+
+
+### Features
+
+* **lib:** add showInactiveArrows option for calendarCloses [#16](https://github.com/stumpam/ngx-date-input/issues/16) ([178f46e](https://github.com/stumpam/ngx-date-input/commit/178f46ea979975bbef6a614e317993931d8c0429))
+
+
+### Bug Fixes
+
+* **lib:** calendar show right max/min date ([3464c0e](https://github.com/stumpam/ngx-date-input/commit/3464c0ef823b520751e4e5a8e017ddb746044da3)), closes [#13](https://github.com/stumpam/ngx-date-input/issues/13)
+
 ## [1.6.0](https://github.com/stumpam/ngx-date-input/compare/v1.5.0...v1.6.0) (2020-03-10)
 
 
