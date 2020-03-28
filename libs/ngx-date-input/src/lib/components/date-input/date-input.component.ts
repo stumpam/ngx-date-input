@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   forwardRef,
   Input,
   OnDestroy,
@@ -13,7 +14,6 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { EventEmitter } from 'events';
 import { Subject } from 'rxjs';
 
 import { normalizeDate } from '../../functions/date.functions';
