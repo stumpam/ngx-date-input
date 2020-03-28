@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/stumpam/ngx-date-input/compare/v1.7.0...v1.8.0) (2020-03-28)
+
+
+### Features
+
+* **lib:** add blur event ([38b1e07](https://github.com/stumpam/ngx-date-input/commit/38b1e077653ce8ba80d3554956d326d1bb2d15c6)), closes [#17](https://github.com/stumpam/ngx-date-input/issues/17)
+* **lib:** add bottom bar to calendar ([d676e49](https://github.com/stumpam/ngx-date-input/commit/d676e49df5203ed4d9be13700f5f2b142144b2a5)), closes [#19](https://github.com/stumpam/ngx-date-input/issues/19)
+
+
+### Bug Fixes
+
+* **lib:** modify input date if disable weekend is active ([a9ef14e](https://github.com/stumpam/ngx-date-input/commit/a9ef14e5266f170f68f11dc1a95de6899a0cfbeb)), closes [#21](https://github.com/stumpam/ngx-date-input/issues/21)
+* **lib:** remove whitespace in month name ([342520c](https://github.com/stumpam/ngx-date-input/commit/342520c50f1bfbd03aa7089b946d53e9a3888884)), closes [#18](https://github.com/stumpam/ngx-date-input/issues/18)
+* **lib:** section was not properly stated as invalid ([f91a9eb](https://github.com/stumpam/ngx-date-input/commit/f91a9ebae501fa8541ab045305eb6122388aa463)), closes [#21](https://github.com/stumpam/ngx-date-input/issues/21)
+
 ## [1.7.0](https://github.com/stumpam/ngx-date-input/compare/v1.6.0...v1.7.0) (2020-03-11)
 
 
