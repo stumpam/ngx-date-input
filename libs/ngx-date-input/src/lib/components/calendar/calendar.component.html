@@ -16,12 +16,12 @@
             <i class="ngx-dic prev"></i>
         </div>
         <div class="ngx-dic active-month">
-            <span (click)="toggleView('year')" class="ngx-dic">
-                {{ months[activeMonth.getMonth()] }}
-            </span>
-            <span (click)="toggleView('decade')" class="ngx-dic">
-                {{ activeMonth.getFullYear() }}
-            </span>
+            <span (click)="toggleView('year')" class="ngx-dic">{{
+                months[activeMonth.getMonth()]
+            }}</span>
+            <span (click)="toggleView('decade')" class="ngx-dic">{{
+                activeMonth.getFullYear()
+            }}</span>
         </div>
         <div
             class="ngx-dic to-today"
