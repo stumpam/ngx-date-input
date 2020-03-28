@@ -45,15 +45,29 @@ options4: DateInputOptions = {
   // maximum date in YYYY-MM-DD format
   max: '2020-04-10',
   // bolean whether datepicker returns Date object or YYYY-MM-DD format
-  iso: true,
+  iso: boolean,
   // Disables weekends fo pick fromcalendar
-  disableWeekends: true,
+  disableWeekends: boolean,
   // Hides other month dates in calendar
-  hideOtherMonths: true,
+  hideOtherMonths: boolean,
   // Path to image of calendar, when not set it will use ng-content
   image: '*',
   // Sets default view of calendare component. Month shows month dates, year show month per selected year, decade shows 9 followin years in grid
   view: 'month' | 'year' | 'decade',
+  // Shows inactive arrow if previous or next month/year is not active
+  showInactiveArrows?: boolean;
+  // Hides topbar today button - default: true
+  hideTopbarToday?: boolean;
+  // Show bottom bar - default: true
+  showBottomBar?: boolean;
+  bottomBar?: {
+    // Shows today button in bottom bar - default: true
+    today?: boolean;
+    // Shows clear button in bottom bar - default: false
+    clear?: boolean;
+    // Shows close button in bottom bar - default: true
+    close?: boolean;
+  }
 };
 ```
 
