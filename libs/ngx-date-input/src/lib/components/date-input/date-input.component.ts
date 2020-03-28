@@ -61,7 +61,7 @@ export class DateInputComponent
     this.tokens = this._options.tokens;
     this.min = this._options.min;
     this.max = this._options.max;
-    }
+  }
 
   @Output() blurred = new EventEmitter();
 
@@ -137,7 +137,6 @@ export class DateInputComponent
   constructor(
     private readonly cd: ChangeDetectorRef,
     private readonly renderer: Renderer2,
-    private readonly el: ElementRef,
   ) {}
 
   ngOnInit() {
@@ -322,6 +321,18 @@ export class DateInputComponent
 
     if (this.max && this.date && new Date(this.max) < this.date) {
       this.updateDateSection(new Date(this.max));
+    }
+
+    if (this.date && this._options.disableWeekends) {
+      if (this.date.getDay() === 6) {
+        this.date.setDate(this.date.getDate() - 1);
+        this.updateDateSection(this.date);
+      }
+
+      if (this.date.getDay() === 0) {
+        this.date.setDate(this.date.getDate() + 1);
+        this.updateDateSection(this.date);
+      }
     }
 
     value = this.buildString();
