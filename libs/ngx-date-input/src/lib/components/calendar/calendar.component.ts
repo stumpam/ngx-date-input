@@ -34,6 +34,7 @@ export class CalendarComponent implements OnInit {
 
   @Output() selectionChange = new EventEmitter();
   @Output() hideCalendar = new EventEmitter();
+  @Output() clear = new EventEmitter();
 
   today = normalizeDate(new Date());
   dates: Date[][] = [];
@@ -165,7 +166,13 @@ export class CalendarComponent implements OnInit {
     this.cd.markForCheck();
   }
 
-  toToday() {
+  toToday(setToday = false) {
+    if (setToday && this.view === 'month') {
+      this.setDate(this.today);
+
+      return;
+    }
+
     this.activeMonth = new Date(this.today);
     this.generateMonth(this.today);
     this.toggleView('month');
@@ -358,6 +365,13 @@ export class CalendarComponent implements OnInit {
   }
 
   showToday() {
+    if (this.options.disableWeekends) {
+      const weekDay = this.today.getDay();
+      if (weekDay === 6 || weekDay === 0) {
+        return false;
+      }
+    }
+
     if (this.options.min) {
       const min = normalizeDate(this.options.min);
       if (this.today.getTime() < min.getTime()) {

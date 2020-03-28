@@ -4,6 +4,29 @@
     "
 >
 </ng-container>
+<div class="ngx-dic bottom-bar" *ngIf="options.showBottomBar">
+    <div
+        class="ngx-dic today"
+        (click)="toToday(true)"
+        *ngIf="options.bottomBar?.today && showToday()"
+    >
+        Dnes
+    </div>
+    <div
+        class="ngx-dic clear"
+        (click)="clear.next()"
+        *ngIf="options.bottomBar?.clear"
+    >
+        Vymazat
+    </div>
+    <div
+        class="ngx-dic close"
+        (click)="hideCalendar.next()"
+        *ngIf="options.bottomBar?.close"
+    >
+        Zavřít
+    </div>
+</div>
 
 <ng-template #month>
     <div class="ngx-dic top-bar">
@@ -26,7 +49,7 @@
         <div
             class="ngx-dic to-today"
             (click)="toToday()"
-            *ngIf="showToday()"
+            *ngIf="!options.hideTopbarToday && showToday()"
         ></div>
         <div
             class="ngx-dic ngx-dic-next"
@@ -76,7 +99,7 @@
         <div
             class="ngx-dic to-today"
             (click)="toToday()"
-            *ngIf="showToday()"
+            *ngIf="!options.hideTopbarToday && showToday()"
         ></div>
         <div
             class="ngx-dic ngx-dic-next"
@@ -120,7 +143,7 @@
         <div
             class="ngx-dic to-today"
             (click)="toToday()"
-            *ngIf="showToday()"
+            *ngIf="!options.hideTopbarToday && showToday()"
         ></div>
 
         <div

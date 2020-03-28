@@ -51,21 +51,28 @@ export class DateInputComponent
   @ViewChild('field', { static: true }) field: ElementRef<HTMLInputElement>;
   @Input() attributes = {};
   @Input() set options(options: DateInputOptions) {
-    this.format = options.format;
-    this._options = options;
-    this.iso = !!options.iso;
+    this._options = {
+      ...this._options,
+      ...options,
+    };
 
-    if (options.tokens) {
-      this.tokens = options.tokens;
+    this.format = this._options.format;
+    this.iso = !!this._options.iso;
+    this.tokens = this._options.tokens;
+    this.min = this._options.min;
+    this.max = this._options.max;
     }
-
-    this.min = options.min;
-    this.max = options.max;
-  }
 
   @Output() blurred = new EventEmitter();
 
-  _options: DateInputOptions = {} as DateInputOptions;
+  _options: DateInputOptions = {
+    hideTopbarToday: true,
+    showBottomBar: true,
+    bottomBar: {
+      today: true,
+      close: true,
+    },
+  } as DateInputOptions;
 
   tokens: TokenConfig = {
     YYYY: {
@@ -462,7 +469,10 @@ export class DateInputComponent
     }
   }
 
-  resetInput() {
+  resetInput(closeCalendar = false) {
+    if (closeCalendar) {
+      this.openCalendar(false);
+    }
     this.onInput('');
   }
 

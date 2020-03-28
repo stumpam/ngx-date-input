@@ -40,6 +40,11 @@ export class AppComponent implements OnInit {
     disableWeekends: true,
     hideOtherMonths: true,
     image: '*',
+    bottomBar: {
+      today: true,
+      clear: true,
+      close: true,
+    },
   };
 
   form = new FormGroup({});

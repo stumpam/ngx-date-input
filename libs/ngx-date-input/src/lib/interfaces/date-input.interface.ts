@@ -38,6 +38,13 @@ export interface DateInputOptions {
   disableOtherMonths?: boolean;
   view?: CalendarView;
   showInactiveArrows?: boolean;
+  hideTopbarToday?: boolean;
+  showBottomBar?: boolean;
+  bottomBar?: {
+    today?: boolean;
+    clear?: boolean;
+    close?: boolean;
+  }
 }
 
 export type CalendarView = 'month' | 'year' | 'decade';

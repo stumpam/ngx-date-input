@@ -68,6 +68,23 @@
     }
   }
 
+  .bottom-bar {
+    display: flex;
+
+    .today,
+    .clear,
+    .close {
+      flex: 1;
+      text-align: center;
+
+      &:hover {
+        text-decoration: underline;
+        font-weight: 600;
+        cursor: pointer;
+      }
+    }
+  }
+
   .row {
     display: flex;
   }
