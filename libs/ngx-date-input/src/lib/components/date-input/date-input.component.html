@@ -7,6 +7,7 @@
     *ngIf="showCalendar"
     (hideCalendar)="openCalendar(false)"
     (selectionChange)="calendarEvent($event)"
+    (blur)="blurred.emit()"
     [date]="date"
     [options]="_options"
 >

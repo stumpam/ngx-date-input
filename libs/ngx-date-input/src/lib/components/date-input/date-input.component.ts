@@ -7,11 +7,13 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  Output,
   Renderer2,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { EventEmitter } from 'events';
 import { Subject } from 'rxjs';
 
 import { normalizeDate } from '../../functions/date.functions';
@@ -60,6 +62,8 @@ export class DateInputComponent
     this.min = options.min;
     this.max = options.max;
   }
+
+  @Output() blurred = new EventEmitter();
 
   _options: DateInputOptions = {} as DateInputOptions;
 
