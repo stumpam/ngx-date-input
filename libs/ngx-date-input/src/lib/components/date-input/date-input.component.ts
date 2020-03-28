@@ -381,6 +381,7 @@ export class DateInputComponent
       if (back && !extra) {
         section.value = '';
         this.sections[index + 1].value = '';
+        this.sections[index + 1].valid = false;
       } else {
         section.value = section.pattern;
       }
@@ -427,7 +428,7 @@ export class DateInputComponent
       } else {
         if (
           extra !== this.sections[index + 1]?.pattern[0] ||
-          (!back && !Number.isNaN(+extra[0]) && !section.valid)
+          (!back && Number.isNaN(+extra[0]) && !section.valid)
         ) {
           extra = '';
         }
