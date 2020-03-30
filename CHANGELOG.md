@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/stumpam/ngx-date-input/compare/v1.8.2...v1.9.0) (2020-03-30)
+
+
+### Features
+
+* **lib:** add option to hide clear button in input ([a3e3fd9](https://github.com/stumpam/ngx-date-input/commit/a3e3fd9dc5c00fc07c3908c6701e94b680359f57)), closes [#23](https://github.com/stumpam/ngx-date-input/issues/23)
+* **lib:** add span around text in bottom bar in calendar ([28a9341](https://github.com/stumpam/ngx-date-input/commit/28a9341a5ee52af78783edceff0200e254d390e1)), closes [#24](https://github.com/stumpam/ngx-date-input/issues/24)
+* **lib:** options can be updated on the fly ([ad58c6e](https://github.com/stumpam/ngx-date-input/commit/ad58c6ea3fb8533c164c4a6b7b0f985235e3aebb))
+
 ### [1.8.2](https://github.com/stumpam/ngx-date-input/compare/v1.8.1...v1.8.2) (2020-03-30)
 
 
