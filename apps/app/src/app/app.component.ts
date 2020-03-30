@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
     max: '2000-12-31',
     image: '*',
     view: 'decade',
+    showInputClear: true,
   };
   options3: DateInputOptions = {
     format: 'YYYY-MM-DD',
@@ -65,6 +66,11 @@ export class AppComponent implements OnInit {
   ];
 
   ngOnInit() {
+    setTimeout(() => {
+      this.options4.max = '2020-03-11';
+      this.options4.format = 'YYYY-MM-DD';
+      this.options4 = JSON.parse(JSON.stringify(this.options4));
+    }, 3000);
     this.ctrl.valueChanges.subscribe(val => console.log(`appCmp: ${val}`));
     this.form.valueChanges.subscribe(val => console.log('formly: ', val));
   }

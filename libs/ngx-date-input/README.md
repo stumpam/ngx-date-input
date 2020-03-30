@@ -38,13 +38,13 @@ or with custom image (svg)
 
 ```typescript
 options4: DateInputOptions = {
-  // valid date types D/DD, M/MM, YYYY and any dividers between
+  // valid date types D/DD, M/MM, YYYY and any dividers between - default: 'D. M. YYYY'
   format: 'D. M. YYYY',
-  // minimal date in YYYY-MM-DD format
+  // minimal date in YYYY-MM-DD format - default: empty
   min: '2020-03-10',
-  // maximum date in YYYY-MM-DD format
+  // maximum date in YYYY-MM-DD format - default: empty
   max: '2020-04-10',
-  // bolean whether datepicker returns Date object or YYYY-MM-DD format
+  // bolean whether datepicker returns Date object or YYYY-MM-DD format - default: false
   iso: boolean,
   // Disables weekends fo pick fromcalendar
   disableWeekends: boolean,
@@ -68,6 +68,8 @@ options4: DateInputOptions = {
     // Shows close button in bottom bar - default: true
     close?: boolean;
   }
+  // Shows clear button in input - default: false
+  showInputClear?: boolean; 
 };
 ```
 
