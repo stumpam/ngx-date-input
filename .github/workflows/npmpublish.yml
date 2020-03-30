@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: 12
       - run: npm ci
-      - run: npm build ngx-input-date
+      - run: npm run build ngx-input-date
         
 
   publish-npm:
