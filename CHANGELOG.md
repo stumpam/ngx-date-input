@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.2](https://github.com/stumpam/ngx-date-input/compare/v1.8.1...v1.8.2) (2020-03-30)
+
+
+### Bug Fixes
+
+* **lib:** move blur event to input ([5adaab0](https://github.com/stumpam/ngx-date-input/commit/5adaab0e588ea300c9184b87c9a5d8605c91430a))
+
 ### [1.8.1](https://github.com/stumpam/ngx-date-input/compare/v1.8.0...v1.8.1) (2020-03-28)
 
 
