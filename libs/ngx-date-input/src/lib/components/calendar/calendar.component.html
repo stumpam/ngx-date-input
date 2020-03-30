@@ -10,21 +10,21 @@
         (click)="toToday(true)"
         *ngIf="options.bottomBar?.today && showToday()"
     >
-        Dnes
+        <span>Dnes</span>
     </div>
     <div
         class="ngx-dic clear"
         (click)="clear.next()"
         *ngIf="options.bottomBar?.clear"
     >
-        Vymazat
+        <span>Vymazat</span>
     </div>
     <div
         class="ngx-dic close"
         (click)="hideCalendar.next()"
         *ngIf="options.bottomBar?.close"
     >
-        Zavřít
+        <span>Zavřít</span>
     </div>
 </div>
 
