@@ -48,19 +48,39 @@ export const DATE_INPUT_VALUE_ACCESSOR: any = {
 })
 export class DateInputComponent
   implements ControlValueAccessor, OnInit, OnDestroy {
+  private init = true;
+
   @ViewChild('field', { static: true }) field: ElementRef<HTMLInputElement>;
-  @Input() attributes = {};
+  @Input() attributes = {} as Record<string, unknown>;
   @Input() set options(options: DateInputOptions) {
+    this.openCalendar(false);
+    let format = false;
+
+    if (this._options.format !== options.format) {
+      format = true;
+    }
+
     this._options = {
       ...this._options,
       ...options,
     };
 
-    this.format = this._options.format;
-    this.iso = !!this._options.iso;
-    this.tokens = this._options.tokens;
-    this.min = this._options.min;
-    this.max = this._options.max;
+    if (format) {
+      this.sections = parseString(this._options.format, this._options.tokens);
+      if (this.date) {
+        this.checkMinMax(true, true);
+        const value = this.buildString();
+        this.updateValue(value);
+      } else {
+        this.resetSections();
+        this.onInput('');
+      }
+    }
+
+    if (this.init && !format) {
+      this.sections = parseString(this._options.format, this._options.tokens);
+      this.init = false;
+    }
   }
 
   @Output() blurred = new EventEmitter();
@@ -72,47 +92,41 @@ export class DateInputComponent
       today: true,
       close: true,
     },
+    showInputClear: false,
+    iso: false,
+    format: 'D. M. YYYY',
+    tokens: {
+      YYYY: {
+        min: 1900,
+        max: 2100,
+        role: TokenRole.year,
+      },
+      DD: {
+        min: 1,
+        max: 31,
+        role: TokenRole.day,
+        leadingZero: true,
+      },
+      MM: {
+        min: 1,
+        max: 12,
+        role: TokenRole.month,
+        leadingZero: true,
+      },
+      D: {
+        min: 1,
+        max: 31,
+        role: TokenRole.day,
+        leadingZero: false,
+      },
+      M: {
+        min: 1,
+        max: 12,
+        role: TokenRole.month,
+        leadingZero: false,
+      },
+    },
   } as DateInputOptions;
-
-  tokens: TokenConfig = {
-    YYYY: {
-      min: 1900,
-      max: 2100,
-      role: TokenRole.year,
-    },
-    DD: {
-      min: 1,
-      max: 31,
-      role: TokenRole.day,
-      leadingZero: true,
-    },
-    MM: {
-      min: 1,
-      max: 12,
-      role: TokenRole.month,
-      leadingZero: true,
-    },
-    D: {
-      min: 1,
-      max: 31,
-      role: TokenRole.day,
-      leadingZero: false,
-    },
-    M: {
-      min: 1,
-      max: 12,
-      role: TokenRole.month,
-      leadingZero: false,
-    },
-  };
-
-  set format(format: string) {
-    this.sections = parseString(format, this.tokens);
-  }
-
-  max: string | Date = '';
-  min: string | Date = '';
-  iso = false;
 
   showCalendar = false;
 
@@ -195,12 +209,18 @@ export class DateInputComponent
   }
 
   onKeyDown(event: KeyboardEvent) {
+    if (this.attributes?.readonly) {
+      return;
+    }
+
     if (event.key === 'Delete') {
       if (
         this.cursorPosition === 0 &&
         this.cursorPositionEnd === this.field.nativeElement.value.length
       ) {
-        this.min ? this.setDate(new Date(this.min)) : this.onInput('');
+        this._options.min
+          ? this.setDate(new Date(this._options.min))
+          : this.onInput('');
 
         return;
       }
@@ -214,7 +234,9 @@ export class DateInputComponent
         this.cursorPosition === 0 &&
         this.cursorPositionEnd === this.field.nativeElement.value.length
       ) {
-        this.min ? this.setDate(new Date(this.min)) : this.onInput('');
+        this._options.min
+          ? this.setDate(new Date(this._options.min))
+          : this.onInput('');
 
         return;
       }
@@ -315,28 +337,40 @@ export class DateInputComponent
       this.date = undefined;
     }
 
-    if (this.min && this.date && new Date(this.min) > this.date) {
-      this.updateDateSection(new Date(this.min));
+    this.checkMinMax();
+
+    value = this.buildString();
+    this.updateValue(value);
+  }
+
+  checkMinMax(addDivider = false, valid = false) {
+    if (
+      this._options.min &&
+      this.date &&
+      new Date(this._options.min) > this.date
+    ) {
+      this.updateDateSection(new Date(this._options.min), addDivider, valid);
     }
 
-    if (this.max && this.date && new Date(this.max) < this.date) {
-      this.updateDateSection(new Date(this.max));
+    if (
+      this._options.max &&
+      this.date &&
+      new Date(this._options.max) < this.date
+    ) {
+      this.updateDateSection(new Date(this._options.max), addDivider, valid);
     }
 
     if (this.date && this._options.disableWeekends) {
       if (this.date.getDay() === 6) {
         this.date.setDate(this.date.getDate() - 1);
-        this.updateDateSection(this.date);
+        this.updateDateSection(this.date, addDivider, valid);
       }
 
       if (this.date.getDay() === 0) {
         this.date.setDate(this.date.getDate() + 1);
-        this.updateDateSection(this.date);
+        this.updateDateSection(this.date, addDivider, valid);
       }
     }
-
-    value = this.buildString();
-    this.updateValue(value);
   }
 
   updateValue(value: string) {
@@ -344,7 +378,8 @@ export class DateInputComponent
     if (this.date !== this.prevDate) {
       this.date?.setHours((-1 * this.date.getTimezoneOffset()) / 60, 0, 0, 0);
       this.changeFn?.(
-        (this.date && (this.iso ? dateToISO(this.date) : this.date)) || null,
+        (this.date && (this._options.iso ? dateToISO(this.date) : this.date)) ||
+          null,
       );
     }
 
@@ -360,7 +395,7 @@ export class DateInputComponent
     });
   }
 
-  updateDateSection(newDate: Date, addDivider = false) {
+  updateDateSection(newDate: Date, addDivider = false, valid = true) {
     this.sections.map(s => {
       if (s.role === TokenRole.day) {
         s.value = padStart(newDate.getDate(), s.leadingZero ? 2 : 1);
@@ -369,6 +404,11 @@ export class DateInputComponent
       } else if (s.role === TokenRole.year) {
         s.value = newDate.getFullYear().toString();
       }
+
+      if (valid && s.role !== TokenRole.divider) {
+        s.valid = true;
+      }
+
       if (addDivider && s.role === TokenRole.divider) {
         s.value = s.pattern;
       }
