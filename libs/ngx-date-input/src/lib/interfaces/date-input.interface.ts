@@ -45,6 +45,7 @@ export interface DateInputOptions {
     clear?: boolean;
     close?: boolean;
   }
+  showInputClear?: boolean;
 }
 
 export type CalendarView = 'month' | 'year' | 'decade';

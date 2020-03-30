@@ -1,5 +1,7 @@
 <input #field type="string" [disabled]="disabled" (blur)="blurred.emit()" />
-<div class="clear-input" (click)="resetInput()">×</div>
+<div class="clear-input" *ngIf="_options.showInputClear" (click)="resetInput()">
+    ×
+</div>
 <ng-container [ngTemplateOutlet]="_options?.image ? image : content">
 </ng-container>
 
