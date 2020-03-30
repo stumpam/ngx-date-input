@@ -4,20 +4,8 @@ on:
   release:
     types: [published]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - run: npm ci
-      - run: npm run build ngx-date-input
-        
-
+jobs:    
   publish-npm:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -25,13 +13,13 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
-      - run: cd ./dist/libs/ngx-date-input
-      - run: npm publish --access public
+      - run: npm ci
+      - run: npm run build ngx-date-input
+      - run: npm publish dist/libs/ngx-date-input --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
   publish-gpr:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -39,7 +27,8 @@ jobs:
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
-      - run: cd ./dist/libs/ngx-date-input
-      - run: npm publish
+      - run: npm ci
+      - run: npm run build ngx-date-input
+      - run: npm dist/libs/ngx-date-input publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
