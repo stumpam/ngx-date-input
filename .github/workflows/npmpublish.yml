@@ -29,6 +29,6 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: npm ci
       - run: npm run build ngx-date-input
-      - run: npm dist/libs/ngx-date-input publish
+      - run: npm publish dist/libs/ngx-date-input
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
