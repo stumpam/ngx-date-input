@@ -1,4 +1,4 @@
-<input #field type="string" [disabled]="disabled" />
+<input #field type="string" [disabled]="disabled" (blur)="blurred.emit()" />
 <div class="clear-input" (click)="resetInput()">×</div>
 <ng-container [ngTemplateOutlet]="_options?.image ? image : content">
 </ng-container>
@@ -7,7 +7,6 @@
     *ngIf="showCalendar"
     (hideCalendar)="openCalendar(false)"
     (selectionChange)="calendarEvent($event)"
-    (blur)="blurred.emit()"
     (clear)="resetInput(true)"
     [date]="date"
     [options]="_options"
