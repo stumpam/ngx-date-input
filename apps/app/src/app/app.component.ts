@@ -70,7 +70,12 @@ export class AppComponent implements OnInit {
       this.options4.max = '2020-03-11';
       this.options4.format = 'YYYY-MM-DD';
       this.options4 = JSON.parse(JSON.stringify(this.options4));
+    }, 2000);
+    setTimeout(() => {
+      this.options3.max = '2020-03-11';
+      this.options3 = JSON.parse(JSON.stringify(this.options3));
     }, 3000);
+
     this.ctrl.valueChanges.subscribe(val => console.log(`appCmp: ${val}`));
     this.form.valueChanges.subscribe(val => console.log('formly: ', val));
   }
