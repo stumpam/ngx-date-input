@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.2](https://github.com/stumpam/ngx-date-input/compare/v1.9.1...v1.9.2) (2020-03-31)
+
+
+### Bug Fixes
+
+* **lib:** update sections for same date ([aaa7ceb](https://github.com/stumpam/ngx-date-input/commit/aaa7ceb11f6cada0832e8a828e70e98083db0e29))
+
 ### [1.9.1](https://github.com/stumpam/ngx-date-input/compare/v1.9.0-build-4...v1.9.1) (2020-03-31)
 
 
