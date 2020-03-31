@@ -72,7 +72,7 @@ export class DateInputComponent
     if (update) {
       this.sections = parseString(this._options.format, this._options.tokens);
       if (this.date) {
-        this.checkMinMax(true, true);
+        this.checkMinMax(true, true, true);
         const value = this.buildString();
         this.updateValue(value);
       } else {
@@ -347,13 +347,14 @@ export class DateInputComponent
     this.updateValue(value);
   }
 
-  checkMinMax(addDivider = false, valid = false) {
+  checkMinMax(addDivider = false, valid = false, update = false) {
     if (
       this._options.min &&
       this.date &&
       new Date(this._options.min) > this.date
     ) {
       this.updateDateSection(new Date(this._options.min), addDivider, valid);
+      update = false;
     }
 
     if (
@@ -362,18 +363,25 @@ export class DateInputComponent
       new Date(this._options.max) < this.date
     ) {
       this.updateDateSection(new Date(this._options.max), addDivider, valid);
+      update = false;
     }
 
     if (this.date && this._options.disableWeekends) {
       if (this.date.getDay() === 6) {
         this.date.setDate(this.date.getDate() - 1);
         this.updateDateSection(this.date, addDivider, valid);
+        update = false;
       }
 
       if (this.date.getDay() === 0) {
         this.date.setDate(this.date.getDate() + 1);
         this.updateDateSection(this.date, addDivider, valid);
+        update = false;
       }
+    }
+
+    if (update) {
+      this.updateDateSection(this.date, true, true);
     }
   }
 
