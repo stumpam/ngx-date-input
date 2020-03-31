@@ -54,10 +54,14 @@ export class DateInputComponent
   @Input() attributes = {} as Record<string, unknown>;
   @Input() set options(options: DateInputOptions) {
     this.openCalendar(false);
-    let format = false;
+    let update = false;
 
-    if (this._options.format !== options.format) {
-      format = true;
+    if (
+      this._options.format !== options.format ||
+      this._options.min !== options.min ||
+      this._options.max !== options.max
+    ) {
+      update = true;
     }
 
     this._options = {
@@ -65,7 +69,7 @@ export class DateInputComponent
       ...options,
     };
 
-    if (format) {
+    if (update) {
       this.sections = parseString(this._options.format, this._options.tokens);
       if (this.date) {
         this.checkMinMax(true, true);
@@ -77,7 +81,7 @@ export class DateInputComponent
       }
     }
 
-    if (this.init && !format) {
+    if (this.init && !update) {
       this.sections = parseString(this._options.format, this._options.tokens);
       this.init = false;
     }
