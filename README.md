@@ -69,7 +69,11 @@ options4: DateInputOptions = {
     close?: boolean;
   }
   // Shows clear button in input - default: false
-  showInputClear?: boolean; 
+  showInputClear?: boolean;
+  // Calendar which starts in `decade` will be end aligned to the options.max date
+  maxAtEnd?: boolean;
+  // Calendar which starts in `decade` will be start aligned to the options.min date
+  minAtStart?: boolean;
 };
 ```
 
