@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/stumpam/ngx-date-input/compare/v1.9.2-build-1...v1.10.0) (2020-05-14)
+
+
+### Features
+
+* **lib:** add possibility to align corner years ([0aa8a25](https://github.com/stumpam/ngx-date-input/commit/0aa8a2588b8d464ad5d84d58afd50d05ebf469dd))
+
+
+### Bug Fixes
+
+* **lib:** calendar has wrong start and end year ([7f89df4](https://github.com/stumpam/ngx-date-input/commit/7f89df468603cb0dde421e5c9ed3955b6732738b))
+* **lib:** leading zero was not correct on IE and Safari ([6391aab](https://github.com/stumpam/ngx-date-input/commit/6391aab9b2f2b517a5c257ec0c3b11d1f7840255))
+
 ### [1.9.2](https://github.com/stumpam/ngx-date-input/compare/v1.9.1...v1.9.2) (2020-03-31)
 
 
