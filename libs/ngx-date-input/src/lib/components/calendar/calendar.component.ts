@@ -161,7 +161,7 @@ export class CalendarComponent implements OnInit {
   changeDecade(next = true) {
     if (!this.showDecade(next)) return;
 
-    const nextYear = next ? 7 : -7;
+    const nextYear = next ? 9 : -9;
     this.activeMonth.setFullYear(this.activeMonth.getFullYear() + nextYear);
     this.cd.markForCheck();
   }
