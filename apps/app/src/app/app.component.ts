@@ -16,7 +16,8 @@ export class AppComponent implements OnInit {
   options1: DateInputOptions = {
     format: 'D. M. YYYY',
     min: '2020-01-10',
-    view: 'year',
+    minAtStart: true,
+    view: 'decade',
     showInactiveArrows: true,
   };
   options2: DateInputOptions = {
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit {
     image: '*',
     view: 'decade',
     showInputClear: true,
+    maxAtEnd: true,
   };
   options3: DateInputOptions = {
     format: 'YYYY-MM-DD',
