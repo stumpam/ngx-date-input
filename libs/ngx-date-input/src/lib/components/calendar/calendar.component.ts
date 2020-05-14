@@ -63,11 +63,14 @@ export class CalendarComponent implements OnInit {
   constructor(private readonly cd: ChangeDetectorRef) {}
 
   ngOnInit() {
+    let edge = '';
+
     if (this.options.min) {
       const min = normalizeDate(new Date(this.options.min));
       if (!this.date || this.date?.getTime() < min.getTime()) {
         this.date = min;
       }
+      edge = 'min';
     }
 
     if (this.options.max) {
@@ -75,6 +78,7 @@ export class CalendarComponent implements OnInit {
       if (!this.date || this.date?.getTime() > max.getTime()) {
         this.date = max;
       }
+      edge = 'max';
     }
 
     this.activeMonth = this.date
@@ -95,6 +99,14 @@ export class CalendarComponent implements OnInit {
 
     if (this.options.view) {
       this.view = this.options.view;
+
+      if (this.options.minAtStart && this.view === 'decade' && edge === 'min') {
+        this.activeMonth.setFullYear(this.activeMonth.getFullYear() + 4);
+      }
+
+      if (this.options.maxAtEnd && this.view === 'decade' && edge === 'max') {
+        this.activeMonth.setFullYear(this.activeMonth.getFullYear() - 4);
+      }
     }
   }
 

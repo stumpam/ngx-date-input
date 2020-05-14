@@ -44,8 +44,10 @@ export interface DateInputOptions {
     today?: boolean;
     clear?: boolean;
     close?: boolean;
-  }
+  };
   showInputClear?: boolean;
+  maxAtEnd?: boolean;
+  minAtStart?: boolean;
 }
 
 export type CalendarView = 'month' | 'year' | 'decade';
