@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.1](https://github.com/stumpam/ngx-date-input/compare/v1.10.0...v1.10.1) (2020-05-20)
+
+
+### Bug Fixes
+
+* **lib:** pad ding has incorrect function ([7d877eb](https://github.com/stumpam/ngx-date-input/commit/7d877eb8828daf1b2d604c03ceebc2afa09b2ce2))
+
 ## [1.10.0](https://github.com/stumpam/ngx-date-input/compare/v1.9.2-build-1...v1.10.0) (2020-05-14)
 
 
