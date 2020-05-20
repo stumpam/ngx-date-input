@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.2](https://github.com/stumpam/ngx-date-input/compare/v1.10.1...v1.10.2) (2020-05-20)
+
+
+### Bug Fixes
+
+* **lib:** calendar was closed even on click on it ([902c450](https://github.com/stumpam/ngx-date-input/commit/902c450095846b978b937f3377dc6cc7e6a7489e))
+
 ### [1.10.1](https://github.com/stumpam/ngx-date-input/compare/v1.10.0...v1.10.1) (2020-05-20)
 
 
