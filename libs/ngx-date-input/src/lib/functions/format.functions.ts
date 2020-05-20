@@ -1,6 +1,6 @@
 export const padStart = (
   str: string | number,
-  length: number,
+  length: number = 2,
   char: string = '0',
 ) => {
   str = str.toString();

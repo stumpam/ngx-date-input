@@ -335,8 +335,9 @@ export class DateInputComponent
 
     if (year && month && checkedDay) {
       this.prevDate = this.date;
-      const leadingZeroMonth = this.leadingZeroValue(month);
-      this.date = new Date(`${year}-${leadingZeroMonth}-${checkedDay}`);
+      const leadingZeroMonth = padStart(month);
+      const leadingZeroDay = padStart(checkedDay);
+      this.date = new Date(`${year}-${leadingZeroMonth}-${leadingZeroDay}`);
     } else {
       this.prevDate = this.date;
       this.date = undefined;
@@ -346,14 +347,6 @@ export class DateInputComponent
 
     value = this.buildString();
     this.updateValue(value);
-  }
-
-  leadingZeroValue(value: string): string {
-    if (!value || isNaN(+value)) {
-      return value;
-    }
-
-    return value.substr(0, 1) === '0' ? value : `0${value}`;
   }
 
   checkMinMax(addDivider = false, valid = false, update = false) {
