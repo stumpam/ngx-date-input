@@ -234,7 +234,9 @@ export class CalendarComponent implements OnInit {
 
     if (
       !target.classList.contains('ngx-dic') &&
-      !target.classList.contains('ngx-date-input-calendar')
+      !target.classList.contains('ngx-date-input-calendar') &&
+      !target.parentElement?.classList.contains('ngx-dic') &&
+      !target.parentElement?.classList.contains('ngx-date-input-calendar')
     ) {
       this.hideCalendar.emit();
     }
