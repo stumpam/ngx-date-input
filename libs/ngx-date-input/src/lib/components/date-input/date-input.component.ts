@@ -265,7 +265,7 @@ export class DateInputComponent
     const value = this.sections.reduce((str, section) => {
       let sectionValue = section.value;
 
-      if (!sectionValue.length) return;
+      if (!sectionValue?.length) return;
 
       if (active && pos >= index && pos <= sectionValue.length + index) {
         if (section.role !== TokenRole.divider) {
