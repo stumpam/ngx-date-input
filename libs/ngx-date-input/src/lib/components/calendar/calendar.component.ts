@@ -65,19 +65,28 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
     let edge = '';
 
-    if (this.options.min) {
+    if (this.options.min && !this.options.maxAtEnd) {
       const min = normalizeDate(new Date(this.options.min));
-      if (!this.date || this.date?.getTime() < min.getTime()) {
+      if (
+        !this.date ||
+        (this.options.minAtStart &&
+          this.date &&
+          this.date.getTime() > min.getTime()) ||
+        this.date?.getTime() < min.getTime()
+      ) {
         this.date = min;
       }
       edge = 'min';
     }
 
-    if (this.options.max) {
+    if (this.options.max && !this.options.minAtStart) {
       const max = normalizeDate(new Date(this.options.max));
       if (
         !this.date ||
-        edge === 'min' ||
+        (edge === 'min' && this.options.maxAtEnd) ||
+        (this.options.maxAtEnd &&
+          this.date &&
+          this.date.getTime() < max.getTime()) ||
         this.date?.getTime() > max.getTime()
       ) {
         this.date = max;
