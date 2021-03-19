@@ -37,9 +37,6 @@ export const DATE_INPUT_VALUE_ACCESSOR: any = {
   styleUrls: ['./date-input.component.scss'],
   // tslint:disable-next-line: no-host-metadata-property
   host: {
-    '(click)': 'onClick()',
-    '(input)': 'onInput($event.target.value)',
-    '(keydown)': 'onKeyDown($event)',
     '[class.ngx-date-input]': 'true',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -265,9 +262,7 @@ export class DateInputComponent
     const value = this.sections.reduce((str, section) => {
       let sectionValue = section.value;
 
-      if (!sectionValue?.length) return;
-
-      if (active && pos >= index && pos <= sectionValue.length + index) {
+      if (active && pos >= index && pos <= section.value.length + index) {
         if (section.role !== TokenRole.divider) {
           if (key !== 'none') {
             const orig = +section.value;
@@ -287,13 +282,16 @@ export class DateInputComponent
           pos = pos + 1;
         }
       }
-      index = index + sectionValue.length;
+
+      index = index + section.value.length;
+
       return str + sectionValue;
     }, '');
 
     if (key !== 'none') {
       this.onInput(value);
     }
+
     this.field.nativeElement.setSelectionRange(pos, right);
   }
 

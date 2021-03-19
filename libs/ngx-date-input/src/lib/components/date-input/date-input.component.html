@@ -1,4 +1,12 @@
-<input #field type="string" [disabled]="disabled" (blur)="blurred.emit()" />
+<input
+    #field
+    type="string"
+    [disabled]="disabled"
+    (blur)="blurred.emit()"
+    (click)="onClick()"
+    (input)="onInput($event.target.value)"
+    (keydown)="onKeyDown($event)"
+/>
 <div class="clear-input" *ngIf="_options.showInputClear" (click)="resetInput()">
     ×
 </div>
