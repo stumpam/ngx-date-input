@@ -264,7 +264,10 @@ export class DateInputComponent
 
     const value = this.sections.reduce((str, section) => {
       let sectionValue = section.value;
-      if (active && pos >= index && pos <= section.value?.length + index) {
+
+      if (!sectionValue.length) return;
+
+      if (active && pos >= index && pos <= sectionValue.length + index) {
         if (section.role !== TokenRole.divider) {
           if (key !== 'none') {
             const orig = +section.value;
@@ -284,7 +287,7 @@ export class DateInputComponent
           pos = pos + 1;
         }
       }
-      index = index + section.value.length;
+      index = index + sectionValue.length;
       return str + sectionValue;
     }, '');
 
