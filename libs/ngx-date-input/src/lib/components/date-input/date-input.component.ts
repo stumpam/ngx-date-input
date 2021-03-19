@@ -73,9 +73,8 @@ export class DateInputComponent
       if (this.date) {
         this.checkMinMax(true, true, true);
         const value = this.buildString();
-        this.updateValue(value);
+        this.onInput(value);
       } else {
-        this.resetSections();
         this.onInput('');
       }
     }
