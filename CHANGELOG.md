@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/stumpam/ngx-date-input/compare/v1.10.2...v1.11.0) (2021-03-19)
+
+
+### Features
+
+* add disableDateFn ([bf677a5](https://github.com/stumpam/ngx-date-input/commit/bf677a5ef12bedea31d58f1c6434cb748c257f8d))
+
 ### [1.10.2](https://github.com/stumpam/ngx-date-input/compare/v1.10.1...v1.10.2) (2020-05-20)
 
 
