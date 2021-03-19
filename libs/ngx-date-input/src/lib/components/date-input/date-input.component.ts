@@ -210,10 +210,8 @@ export class DateInputComponent
   }
 
   onClick() {
-    setTimeout(() => {
-      this.updateSection('none');
-      this.touchedFn?.();
-    });
+    this.updateSection('none');
+    this.touchedFn?.();
   }
 
   onKeyDown(event: KeyboardEvent) {
@@ -266,7 +264,7 @@ export class DateInputComponent
 
     const value = this.sections.reduce((str, section) => {
       let sectionValue = section.value;
-      if (active && pos >= index && pos <= section.value.length + index) {
+      if (active && pos >= index && pos <= section.value?.length + index) {
         if (section.role !== TokenRole.divider) {
           if (key !== 'none') {
             const orig = +section.value;
