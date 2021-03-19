@@ -191,13 +191,14 @@ export class CalendarComponent implements OnInit {
   }
 
   setDate(date: Date) {
-    if (this.notActive(date)) {
+    if (this.notActive(date) || this.options.disabledFn?.(date)) {
       return;
     }
 
     if (this.isNotActiveMonth(date)) {
       this.activeMonth = date;
     }
+
     this.selectionChange.emit(date);
   }
 
@@ -212,7 +213,7 @@ export class CalendarComponent implements OnInit {
   }
 
   setYear(year: number) {
-    if (this.notActiveYear(year)) {
+    if (this.notActiveYear(year) || this.options.disabledFn?.(year)) {
       return;
     }
 
@@ -341,6 +342,10 @@ export class CalendarComponent implements OnInit {
   }
 
   notActiveMonth(month: number) {
+    if (this.options.disabledFn?.(this.activeMonth)) {
+      return true;
+    }
+
     if (this.options.min) {
       const min = normalizeDate(this.options.min);
       if (
@@ -363,6 +368,10 @@ export class CalendarComponent implements OnInit {
   }
 
   notActiveYear(year: number) {
+    if (this.options.disabledFn?.(year)) {
+      return true;
+    }
+
     if (this.options.min) {
       const min = normalizeDate(this.options.min);
       if (year < min.getFullYear()) {

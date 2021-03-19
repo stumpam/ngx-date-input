@@ -48,6 +48,7 @@ export interface DateInputOptions {
   showInputClear?: boolean;
   maxAtEnd?: boolean;
   minAtStart?: boolean;
+  disabledFn?: (date: Date | number) => boolean;
 }
 
 export type CalendarView = 'month' | 'year' | 'decade';

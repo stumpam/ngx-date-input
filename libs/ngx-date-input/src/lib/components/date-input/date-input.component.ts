@@ -52,7 +52,9 @@ export class DateInputComponent
 
   @ViewChild('field', { static: true }) field: ElementRef<HTMLInputElement>;
   @Input() attributes = {} as Record<string, unknown>;
-  @Input() set options(options: DateInputOptions) {
+  @Input() set options(options: DateInputOptions | null) {
+    if (!options) return;
+
     this.openCalendar(false);
     let update = false;
 
