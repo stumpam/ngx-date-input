@@ -75,7 +75,11 @@ export class CalendarComponent implements OnInit {
 
     if (this.options.max) {
       const max = normalizeDate(new Date(this.options.max));
-      if (!this.date || this.date?.getTime() > max.getTime()) {
+      if (
+        !this.date ||
+        edge === 'min' ||
+        this.date?.getTime() > max.getTime()
+      ) {
         this.date = max;
       }
       edge = 'max';
