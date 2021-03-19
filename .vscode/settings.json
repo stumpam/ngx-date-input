@@ -1,3 +1,6 @@
 {
-  "explorer.compactFolders": false
+  "explorer.compactFolders": false,
+  "conventionalCommits.scopes": [
+    "lib"
+  ]
 }

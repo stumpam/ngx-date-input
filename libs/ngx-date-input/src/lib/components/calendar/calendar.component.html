@@ -73,7 +73,7 @@
                     !showDate(day) ||
                     notActive(day) ||
                     fadeDate(day) ||
-                    (options.disabledFn && options.disabledFn(day)),
+                    (options.disabledFn && options.disabledFn(day, 'date')),
                 faded: fadedDate(day)
             }"
             *ngFor="let day of week"

@@ -191,7 +191,7 @@ export class CalendarComponent implements OnInit {
   }
 
   setDate(date: Date) {
-    if (this.notActive(date) || this.options.disabledFn?.(date)) {
+    if (this.notActive(date) || this.options.disabledFn?.(date, 'date')) {
       return;
     }
 
@@ -213,7 +213,7 @@ export class CalendarComponent implements OnInit {
   }
 
   setYear(year: number) {
-    if (this.notActiveYear(year) || this.options.disabledFn?.(year)) {
+    if (this.notActiveYear(year) || this.options.disabledFn?.(year, 'year')) {
       return;
     }
 
@@ -342,7 +342,9 @@ export class CalendarComponent implements OnInit {
   }
 
   notActiveMonth(month: number) {
-    if (this.options.disabledFn?.(this.activeMonth)) {
+    if (
+      this.options.disabledFn?.(month, 'month', this.activeMonth.getFullYear())
+    ) {
       return true;
     }
 
@@ -368,7 +370,7 @@ export class CalendarComponent implements OnInit {
   }
 
   notActiveYear(year: number) {
-    if (this.options.disabledFn?.(year)) {
+    if (this.options.disabledFn?.(year, 'year')) {
       return true;
     }
 

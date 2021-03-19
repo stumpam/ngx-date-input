@@ -27,12 +27,17 @@ export class AppComponent implements OnInit {
     view: 'decade',
     showInputClear: true,
     maxAtEnd: true,
-    disabledFn: date => {
-      if (typeof date === 'number') {
+    disabledFn: (date, type): boolean => {
+      if (type === 'year') {
         return date > 1950 && date < 1960;
       }
 
-      return date.getFullYear() > 1950 && date.getFullYear() < 1960;
+      if (type === 'date') {
+        return (
+          (date as Date).getFullYear() > 1950 &&
+          (date as Date).getFullYear() < 1960
+        );
+      }
     },
   };
   options3: DateInputOptions = {
