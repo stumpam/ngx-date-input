@@ -1,6 +1,6 @@
 {
   "name": "ngx-date-input",
-  "version": "1.11.3",
+  "version": "1.11.4",
   "license": "MIT",
   "scripts": {
     "release": "standard-version",
