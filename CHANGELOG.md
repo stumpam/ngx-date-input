@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.8](https://github.com/stumpam/ngx-date-input/compare/v1.11.7...v1.11.8) (2021-03-19)
+
+
+### Bug Fixes
+
+* **lib:** :bug: calendar ignored maxAtEnd ([cc7fe96](https://github.com/stumpam/ngx-date-input/commit/cc7fe96082c2647fdec4a50b34ab92a60bab1cc8))
+
 ### [1.11.7](https://github.com/stumpam/ngx-date-input/compare/v1.11.6...v1.11.7) (2021-03-19)
 
 
