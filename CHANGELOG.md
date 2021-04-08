@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.10](https://github.com/stumpam/ngx-date-input/compare/v1.11.9...v1.11.10) (2021-04-08)
+
+
+### Bug Fixes
+
+* **lib:** remove touched event on click event ([e13f908](https://github.com/stumpam/ngx-date-input/commit/e13f908e470cb94675725861a25358f58b1caa5c))
+
 ### [1.11.9](https://github.com/stumpam/ngx-date-input/compare/v1.11.7...v1.11.9) (2021-03-19)
 
 
