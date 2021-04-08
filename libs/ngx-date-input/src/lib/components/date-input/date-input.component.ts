@@ -207,7 +207,6 @@ export class DateInputComponent
 
   onClick() {
     this.updateSection('none');
-    this.touchedFn?.();
   }
 
   onKeyDown(event: KeyboardEvent) {
