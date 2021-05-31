@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0](https://github.com/stumpam/ngx-date-input/compare/v1.12.1...v1.13.0) (2021-05-31)
+
+
+### Features
+
+* **lib:** update calculation of edge dates ([be6667b](https://github.com/stumpam/ngx-date-input/commit/be6667bc04eed4758a40e6a7083099a426a6ca48))
+
 ### [1.12.1](https://github.com/stumpam/ngx-date-input/compare/v1.12.0...v1.12.1) (2021-05-31)
 
 
