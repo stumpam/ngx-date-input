@@ -573,12 +573,14 @@ export class DateInputComponent
   }
 
   validate({ value }: FormControl) {
-    if (!value) return null;
+    if (!value || !this._options.showErrorOnInvalidDate) return null;
 
     const minValidation =
-      this._options.min && new Date(value) < new Date(this._options.min);
+      this._options.min &&
+      isDateBefore(new Date(value), new Date(this._options.min));
     const maxValidation =
-      this._options.max && new Date(value) > new Date(this._options.max);
+      this._options.max &&
+      isDateAfter(new Date(value), new Date(this._options.max));
 
     return {
       ...(minValidation && {
@@ -594,6 +596,22 @@ export class DateInputComponent
     this.destroy$.next();
     this.destroy$.complete();
   }
+}
+
+function isDateBefore(first: Date, second: Date): boolean {
+  return first.getTime() < second.getTime() && !isDateEqual(first, second);
+}
+
+function isDateAfter(first: Date, second: Date): boolean {
+  return first.getTime() > second.getTime() && !isDateEqual(first, second);
+}
+
+function isDateEqual(first: Date, second: Date): boolean {
+  return (
+    first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() == second.getDate()
+  );
 }
 
 const parseString = (str: string, tokens: TokenConfig) => {
