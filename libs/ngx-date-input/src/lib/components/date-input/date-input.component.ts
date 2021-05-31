@@ -13,7 +13,12 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import { Subject } from 'rxjs';
 
 import { normalizeDate } from '../../functions/date.functions';
@@ -31,6 +36,12 @@ export const DATE_INPUT_VALUE_ACCESSOR: any = {
   multi: true,
 };
 
+const DATE_INPUT_VALUE_VALIDATOR = {
+  provide: NG_VALIDATORS,
+  useExisting: forwardRef(() => DateInputComponent),
+  multi: true,
+};
+
 @Component({
   selector: 'ngx-date-input',
   templateUrl: './date-input.component.html',
@@ -41,7 +52,7 @@ export const DATE_INPUT_VALUE_ACCESSOR: any = {
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  providers: [DATE_INPUT_VALUE_ACCESSOR],
+  providers: [DATE_INPUT_VALUE_ACCESSOR, DATE_INPUT_VALUE_VALIDATOR],
 })
 export class DateInputComponent
   implements ControlValueAccessor, OnInit, OnDestroy {
@@ -200,6 +211,11 @@ export class DateInputComponent
     this.touchedFn = fn;
   }
 
+  onBlur(): void {
+    this.blurred.emit();
+    this.touchedFn?.();
+  }
+
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
     this.cd.markForCheck();
@@ -354,7 +370,8 @@ export class DateInputComponent
     if (
       this._options.min &&
       this.date &&
-      new Date(this._options.min) > this.date
+      new Date(this._options.min) > this.date &&
+      !this._options.showErrorOnInvalidDate
     ) {
       this.updateDateSection(new Date(this._options.min), addDivider, valid);
       update = false;
@@ -363,7 +380,8 @@ export class DateInputComponent
     if (
       this._options.max &&
       this.date &&
-      new Date(this._options.max) < this.date
+      new Date(this._options.max) < this.date &&
+      !this._options.showErrorOnInvalidDate
     ) {
       this.updateDateSection(new Date(this._options.max), addDivider, valid);
       update = false;
@@ -552,6 +570,24 @@ export class DateInputComponent
     this.setDate(date);
     this.showCalendar = false;
     this.cd.markForCheck();
+  }
+
+  validate({ value }: FormControl) {
+    if (!value) return null;
+
+    const minValidation =
+      this._options.min && value < new Date(this._options.min);
+    const maxValidation =
+      this._options.max && value > new Date(this._options.max);
+
+    return {
+      ...(minValidation && {
+        dateInputMin: true,
+      }),
+      ...(maxValidation && {
+        dateInputMax: true,
+      }),
+    };
   }
 
   ngOnDestroy() {

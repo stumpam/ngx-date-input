@@ -45,6 +45,7 @@ export interface DateInputOptions {
     clear?: boolean;
     close?: boolean;
   };
+  showErrorOnInvalidDate?: boolean;
   showInputClear?: boolean;
   maxAtEnd?: boolean;
   minAtStart?: boolean;
