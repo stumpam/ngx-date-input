@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/stumpam/ngx-date-input/compare/v1.11.10...v1.12.0) (2021-05-31)
+
+
+### Features
+
+* **lib:** add option to not change invalid date and show error instead ([a1fab06](https://github.com/stumpam/ngx-date-input/commit/a1fab06b1b391d0e058c5aec9c7f1fb08eb22dbb))
+
 ### [1.11.10](https://github.com/stumpam/ngx-date-input/compare/v1.11.9...v1.11.10) (2021-04-08)
 
 
