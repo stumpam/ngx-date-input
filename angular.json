@@ -21,8 +21,13 @@
             "polyfills": "apps/app/src/polyfills.ts",
             "tsConfig": "apps/app/tsconfig.app.json",
             "aot": true,
-            "assets": ["apps/app/src/favicon.ico", "apps/app/src/assets"],
-            "styles": ["apps/app/src/styles.scss"],
+            "assets": [
+              "apps/app/src/favicon.ico",
+              "apps/app/src/assets"
+            ],
+            "styles": [
+              "apps/app/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -54,7 +59,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -80,16 +88,21 @@
               "apps/app/tsconfig.app.json",
               "apps/app/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/app/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/app/**/*"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/app/jest.config.js",
-            "tsConfig": "apps/app/tsconfig.spec.json",
-            "setupFile": "apps/app/src/test-setup.ts"
-          }
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/apps/app"
+          ]
         }
       }
     },
@@ -114,8 +127,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/app-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/app-e2e/**"]
+            "tsConfig": [
+              "apps/app-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/app-e2e/**/*"
+            ]
           }
         }
       }
@@ -130,7 +148,8 @@
           "builder": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/ngx-date-input/tsconfig.lib.json",
-            "project": "libs/ngx-date-input/ng-package.json"
+            "project": "libs/ngx-date-input/ng-package.json",
+            "buildableProjectDepsInPackageJsonType": "dependencies"
           }
         },
         "lint": {
@@ -140,16 +159,21 @@
               "libs/ngx-date-input/tsconfig.lib.json",
               "libs/ngx-date-input/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/ngx-date-input/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/ngx-date-input/**/*"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/ngx-date-input/jest.config.js",
-            "tsConfig": "libs/ngx-date-input/tsconfig.spec.json",
-            "setupFile": "libs/ngx-date-input/src/test-setup.ts"
-          }
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/libs/ngx-date-input"
+          ]
         }
       },
       "schematics": {

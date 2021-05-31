@@ -19,5 +19,8 @@
       "@stumpam/ngx-date-input": ["libs/ngx-date-input/src/index.ts"]
     }
   },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true
+  },
   "exclude": ["node_modules", "tmp"]
 }

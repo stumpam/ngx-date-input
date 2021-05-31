@@ -32,9 +32,9 @@ export class CalendarComponent implements OnInit {
 
   @Input() options: DateInputOptions = {} as DateInputOptions;
 
-  @Output() selectionChange = new EventEmitter();
-  @Output() hideCalendar = new EventEmitter();
-  @Output() clear = new EventEmitter();
+  @Output() selectionChange = new EventEmitter<Date>();
+  @Output() hideCalendar = new EventEmitter<void>();
+  @Output() clear = new EventEmitter<void>();
 
   today = normalizeDate(new Date());
   dates: Date[][] = [];

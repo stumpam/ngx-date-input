@@ -3,5 +3,10 @@
   "rules": {
     "directive-selector": [true, "attribute", "ngxDateInput", "camelCase"],
     "component-selector": [true, "element", "ngx-date-input", "kebab-case"]
+  },
+  "linterOptions": {
+    "exclude": [
+      "!**/*"
+    ]
   }
 }
