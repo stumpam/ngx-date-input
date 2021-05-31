@@ -576,9 +576,9 @@ export class DateInputComponent
     if (!value) return null;
 
     const minValidation =
-      this._options.min && value < new Date(this._options.min);
+      this._options.min && new Date(value) < new Date(this._options.min);
     const maxValidation =
-      this._options.max && value > new Date(this._options.max);
+      this._options.max && new Date(value) > new Date(this._options.max);
 
     return {
       ...(minValidation && {

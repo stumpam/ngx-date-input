@@ -1,7 +1,7 @@
 {
   "name": "@stumpam/ngx-date-input",
   "license": "MIT",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "description": "Angular Date picker with masked input.",
   "homepage": "https://github.com/stumpam/ngx-date-input",
   "author": "Martin Štumpa (https://github.com/stumpam)",

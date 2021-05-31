@@ -2,7 +2,7 @@
     #field
     type="string"
     [disabled]="disabled"
-    (blur)="blurred.emit()"
+    (blur)="onBlur()"
     (click)="onClick()"
     (input)="onInput($event.target.value)"
     (keydown)="onKeyDown($event)"
