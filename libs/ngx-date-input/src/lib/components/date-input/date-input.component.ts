@@ -21,7 +21,11 @@ import {
 } from '@angular/forms';
 import { Subject } from 'rxjs';
 
-import { normalizeDate } from '../../functions/date.functions';
+import {
+  isDateAfter,
+  isDateBefore,
+  normalizeDate,
+} from '../../functions/date.functions';
 import { padStart } from '../../functions/format.functions';
 import {
   DateInputOptions,
@@ -55,7 +59,8 @@ const DATE_INPUT_VALUE_VALIDATOR = {
   providers: [DATE_INPUT_VALUE_ACCESSOR, DATE_INPUT_VALUE_VALIDATOR],
 })
 export class DateInputComponent
-  implements ControlValueAccessor, OnInit, OnDestroy {
+  implements ControlValueAccessor, OnInit, OnDestroy
+{
   private init = true;
 
   @ViewChild('field', { static: true }) field: ElementRef<HTMLInputElement>;
@@ -596,22 +601,6 @@ export class DateInputComponent
     this.destroy$.next();
     this.destroy$.complete();
   }
-}
-
-function isDateBefore(first: Date, second: Date): boolean {
-  return first.getTime() < second.getTime() && !isDateEqual(first, second);
-}
-
-function isDateAfter(first: Date, second: Date): boolean {
-  return first.getTime() > second.getTime() && !isDateEqual(first, second);
-}
-
-function isDateEqual(first: Date, second: Date): boolean {
-  return (
-    first.getFullYear() === second.getFullYear() &&
-    first.getMonth() === second.getMonth() &&
-    first.getDate() == second.getDate()
-  );
 }
 
 const parseString = (str: string, tokens: TokenConfig) => {

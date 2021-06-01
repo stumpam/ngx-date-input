@@ -9,7 +9,11 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
-import { normalizeDate } from '../../functions/date.functions';
+import {
+  firstDayOfPreviousMonth,
+  lastDayOfNextMonth,
+  normalizeDate,
+} from '../../functions/date.functions';
 import {
   CalendarView,
   DateInputOptions,
@@ -169,8 +173,10 @@ export class CalendarComponent implements OnInit {
   changeMonth(next = true) {
     if (!this.showMonth(next)) return;
 
-    const nextMonth = next ? 1 : -1;
-    this.activeMonth.setMonth(this.activeMonth.getMonth() + nextMonth);
+    this.activeMonth = next
+      ? lastDayOfNextMonth(this.activeMonth)
+      : firstDayOfPreviousMonth(this.activeMonth);
+
     this.generateMonth(this.activeMonth);
     this.cd.markForCheck();
   }
