@@ -4,7 +4,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  forwardRef,
   Input,
   OnDestroy,
   OnInit,
@@ -34,18 +33,6 @@ import {
   TokenRole,
 } from '../../interfaces/date-input.interface';
 
-export const DATE_INPUT_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => DateInputComponent),
-  multi: true,
-};
-
-const DATE_INPUT_VALUE_VALIDATOR = {
-  provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => DateInputComponent),
-  multi: true,
-};
-
 @Component({
   selector: 'ngx-date-input',
   templateUrl: './date-input.component.html',
@@ -56,7 +43,18 @@ const DATE_INPUT_VALUE_VALIDATOR = {
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  providers: [DATE_INPUT_VALUE_ACCESSOR, DATE_INPUT_VALUE_VALIDATOR],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: DateInputComponent,
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: DateInputComponent,
+      multi: true,
+    },
+  ],
 })
 export class DateInputComponent
   implements ControlValueAccessor, OnInit, OnDestroy
