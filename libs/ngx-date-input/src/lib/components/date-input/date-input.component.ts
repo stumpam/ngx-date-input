@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  forwardRef,
   Input,
   OnDestroy,
   OnInit,
@@ -46,12 +47,12 @@ import {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: DateInputComponent,
+      useExisting: forwardRef(() => DateInputComponent),
       multi: true,
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: DateInputComponent,
+      useExisting: forwardRef(() => DateInputComponent),
       multi: true,
     },
   ],
