@@ -15,7 +15,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run build ngx-date-input
-      - run: npm publish dist/libs/ngx-date-input --access public
+      - run: npm publish dist/ngx-date-input --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
@@ -29,6 +29,6 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: npm ci
       - run: npm run build ngx-date-input
-      - run: npm publish dist/libs/ngx-date-input
+      - run: npm publish dist/ngx-date-input
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
