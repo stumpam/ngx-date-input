@@ -1,24 +1,101 @@
-# MyLib
+# NgxDateInput
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.0.
+Angular Date picker with masked input.
 
-## Code scaffolding
+Demo: [https://stackblitz.com/edit/ngx-date-input](https://stackblitz.com/edit/ngx-date-input)
 
-Run `ng generate component component-name --project ngx-date-input` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-date-input`.
-> Note: Don't forget to add `--project ngx-date-input` or else it will be added to the default project in your `angular.json` file. 
+## Quick Start
 
-## Build
+1. Import NgxDateInputModule to your project.
 
-Run `ng build ngx-date-input` to build the project. The build artifacts will be stored in the `dist/` directory.
+```typescript
+import { NgxDateInputModule } from '@stumpam/ngx-date-input';
 
-## Publishing
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, NgxDateInputModule, ReactiveFormsModule],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
 
-After building your library with `ng build ngx-date-input`, go to the dist folder `cd dist/ngx-date-input` and run `npm publish`.
+2. Use in HTML template
 
-## Running unit tests
+```typescript
+<ngx-date-input [formControl]="ctrl" [options]="options"></ngx-date-input>
+```
 
-Run `ng test ngx-date-input` to execute the unit tests via [Karma](https://karma-runner.github.io).
+or with custom image (svg)
 
-## Further help
+```typescript
+<ngx-date-input [formControl]="ctrl" [options]="options1">
+    <img src="*">
+  </ngx-date-input>
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+3. Set up in parent component
+
+```typescript
+options4: DateInputOptions = {
+  // valid date types D/DD, M/MM, YYYY and any dividers between - default: 'D. M. YYYY'
+  format: 'D. M. YYYY',
+  // minimal date in YYYY-MM-DD format - default: empty
+  min: '2020-03-10',
+  // maximum date in YYYY-MM-DD format - default: empty
+  max: '2020-04-10',
+  // bolean whether datepicker returns Date object or YYYY-MM-DD format - default: false
+  iso: boolean,
+  // Disables weekends fo pick fromcalendar
+  disableWeekends: boolean,
+  // Hides other month dates in calendar
+  hideOtherMonths: boolean,
+  // Path to image of calendar, when not set it will use ng-content
+  image: '*',
+  // Sets default view of calendare component. Month shows month dates, year show month per selected year, decade shows 9 followin years in grid
+  view: 'month' | 'year' | 'decade',
+  // Shows inactive arrow if previous or next month/year is not active
+  showInactiveArrows?: boolean;
+  // Hides topbar today button - default: true
+  hideTopbarToday?: boolean;
+  // Show bottom bar - default: true
+  showBottomBar?: boolean;
+  bottomBar?: {
+    // Shows today button in bottom bar - default: true
+    today?: boolean;
+    // Shows clear button in bottom bar - default: false
+    clear?: boolean;
+    // Shows close button in bottom bar - default: true
+    close?: boolean;
+  }
+  // Shows clear button in input - default: false
+  showInputClear?: boolean;
+  // Calendar which starts in `decade` will be end aligned to the options.max date
+  maxAtEnd?: boolean;
+  // Calendar which starts in `decade` will be start aligned to the options.min date
+  minAtStart?: boolean;
+};
+```
+
+### Works with [formly](https://formly.dev)
+
+If you want to add attributes directly to input element make custom Formly field and initialize it on `ngOnInit`
+
+```typescript
+ngOnInit() {
+    this.attributes = {
+      id: this.id,
+      ...this.to.attributes,
+    };
+  }
+```
+
+and use it in the template
+
+```HTML
+<ngx-date-input [formControl]="formControl" [options]="to.dateOptions" [attributes]="attributes"></ngx-date-input>
+```
+
+> ⚠ Caution
+>
+> Attributes are bound just once on ngOnIput hook. Changes are matter of future improvements.
