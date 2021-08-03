@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/stumpam/ngx-date-input/compare/v1.12.16...v2.0.0) (2021-08-03)
+
+
+### Features
+
+* **lib:** migrate to angular workspace ([56d8d22](https://github.com/stumpam/ngx-date-input/commit/56d8d22d470fa88ee15172db7dd37f8b2760f67f))
+
 ### [1.12.16](https://github.com/stumpam/ngx-date-input/compare/v1.12.15...v1.12.16) (2021-08-03)
 
 ### [1.12.15](https://github.com/stumpam/ngx-date-input/compare/v1.12.14...v1.12.15) (2021-08-03)
