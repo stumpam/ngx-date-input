@@ -14,10 +14,10 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@stumpam/ngx-date-input": ["libs/ngx-date-input/src/index.ts"]
-    }
+    "baseUrl": "."//,
+    // "paths": {
+    //   "@stumpam/ngx-date-input": ["libs/ngx-date-input/src/index.ts"]
+    // }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true
