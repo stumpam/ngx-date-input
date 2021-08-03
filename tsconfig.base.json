@@ -15,10 +15,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
-    // "paths": {
-    //   "@stumpam/ngx-date-input": ["libs/ngx-date-input/src/index.ts"]
-    // }
+    "paths": {
+      "@stumpam/ngx-date-input": ["libs/ngx-date-input/src/index.ts"]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true

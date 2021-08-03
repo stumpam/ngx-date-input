@@ -162,8 +162,8 @@ export class DateInputComponent
   prevDate: Date | undefined;
 
   private readonly destroy$ = new Subject<void>();
-  touchedFn: any = null;
-  changeFn: any = null;
+  touchedFn: any;
+  changeFn: any;
   disabled = false;
 
   constructor(
