@@ -9,7 +9,7 @@
     "lib": ["dom", "es2018"]
   },
   "angularCompilerOptions": {
-    "enableIvy": false
+    "compilationMode": "partial"
   },
   "exclude": ["src/test-setup.ts", "**/*.spec.ts"],
   "include": ["**\\*.ts"]
