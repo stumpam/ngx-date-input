@@ -1,3 +1,9 @@
+const { getJestProjects } = require('@nrwl/jest');
+
 module.exports = {
-  projects: ['<rootDir>/apps/app', '<rootDir>/libs/ngx-date-input'],
+  projects: [
+    ...getJestProjects(),
+    '<rootDir>/apps/app',
+    '<rootDir>/libs/ngx-date-input',
+  ],
 };
