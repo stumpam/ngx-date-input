@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.12.10](https://github.com/stumpam/ngx-date-input/compare/v1.12.9...v1.12.10) (2021-08-03)
+
+
+### Bug Fixes
+
+* **lib:** month was incorectly selected when it was shorter than next month ([fbddf8c](https://github.com/stumpam/ngx-date-input/commit/fbddf8c3991e6dcb80d6cf02f0cfb8e8b2d192ce))
+* add missing export ([3ceba43](https://github.com/stumpam/ngx-date-input/commit/3ceba4330aea4c990091c715e1e5597f415e1ed1))
+
 ### [1.12.9](https://github.com/stumpam/ngx-date-input/compare/v1.12.8...v1.12.9) (2021-06-15)
 
 ### [1.12.8](https://github.com/stumpam/ngx-date-input/compare/v1.12.7...v1.12.8) (2021-06-15)
