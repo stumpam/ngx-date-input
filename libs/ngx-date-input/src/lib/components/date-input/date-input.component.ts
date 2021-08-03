@@ -4,16 +4,21 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  forwardRef,
   Input,
   OnDestroy,
   OnInit,
   Output,
   Renderer2,
-  Self,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import { Subject } from 'rxjs';
 
 import {
@@ -29,6 +34,18 @@ import {
   TokenRole,
 } from '../../interfaces/date-input.interface';
 
+const DATE_INPUT_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => DateInputComponent),
+  multi: true,
+};
+
+const DATE_INPUT_VALUE_VALIDATOR = {
+  provide: NG_VALIDATORS,
+  useExisting: forwardRef(() => DateInputComponent),
+  multi: true,
+};
+
 @Component({
   selector: 'ngx-date-input',
   templateUrl: './date-input.component.html',
@@ -39,6 +56,7 @@ import {
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  providers: [DATE_INPUT_VALUE_ACCESSOR, DATE_INPUT_VALUE_VALIDATOR],
 })
 export class DateInputComponent
   implements ControlValueAccessor, OnInit, OnDestroy
@@ -151,10 +169,7 @@ export class DateInputComponent
   constructor(
     private readonly cd: ChangeDetectorRef,
     private readonly renderer: Renderer2,
-    @Self() private controlDirective: NgControl,
-  ) {
-    controlDirective.valueAccessor = this;
-  }
+  ) {}
 
   ngOnInit() {
     Object.entries(this.attributes).forEach(([attr, value]) => {
@@ -164,9 +179,6 @@ export class DateInputComponent
         value.toString(),
       );
     });
-
-    this.controlDirective.control.setValidators([this.validate.bind(this)]);
-    this.controlDirective.control.updateValueAndValidity();
   }
 
   setDate(date: Date) {

@@ -1,6 +1,6 @@
 {
   "name": "ngx-date-input",
-  "version": "1.12.11",
+  "version": "1.12.12",
   "license": "MIT",
   "scripts": {
     "release": "standard-version",
@@ -44,7 +44,7 @@
     "@nrwl/angular": "12.6.3",
     "core-js": "^3.13.1",
     "ngx-semantic-version": "^2.3.0",
-    "@stumpam/ngx-date-input": "1.12.10",
+    "@stumpam/ngx-date-input": "1.12.11",
     "rxjs": "7.1.0",
     "tslib": "^2.2.0",
     "zone.js": "0.11.4"
