@@ -12,6 +12,7 @@ import {
 import {
   firstDayOfPreviousMonth,
   lastDayOfNextMonth,
+  lastDayOfPreviousMonth,
   normalizeDate,
 } from '../../functions/date.functions';
 import {
@@ -227,6 +228,11 @@ export class CalendarComponent implements OnInit {
     }
 
     this.activeMonth.setMonth(month);
+
+    if (this.activeMonth.getMonth() !== month) {
+      this.activeMonth = lastDayOfPreviousMonth(this.activeMonth);
+    }
+
     this.generateMonth(this.activeMonth);
     this.toggleView('month');
   }

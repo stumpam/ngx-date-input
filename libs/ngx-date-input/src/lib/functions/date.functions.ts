@@ -17,6 +17,10 @@ export function lastDayOfNextMonth(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth() + 2, 0);
 }
 
+export function lastDayOfPreviousMonth(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), 0);
+}
+
 export function firstDayOfPreviousMonth(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth() - 1, 1);
 }
