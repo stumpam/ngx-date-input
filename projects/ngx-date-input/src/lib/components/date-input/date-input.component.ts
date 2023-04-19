@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import {
   ControlValueAccessor,
-  FormControl,
+  UntypedFormControl,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
@@ -579,7 +579,7 @@ export class DateInputComponent
     this.cd.markForCheck();
   }
 
-  validate({ value }: FormControl) {
+  validate({ value }: UntypedFormControl) {
     if (!value || !this._options.showErrorOnInvalidDate) return null;
 
     const minValidation =
