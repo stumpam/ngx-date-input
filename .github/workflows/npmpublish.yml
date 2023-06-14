@@ -4,31 +4,65 @@ on:
   release:
     types: [published]
 
-jobs:    
+jobs:
   publish-npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      # Check out the repository
+      - uses: actions/checkout@v3
         with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm run build ngx-date-input
-      - run: npm publish dist/ngx-date-input --access public
+          fetch-depth: 0
+
+      # Install Pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.1
+        with:
+          version: "7.x"
+      # Install Node.js
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+          registry-url: "https://registry.npmjs.org/"
+          cache: "pnpm"
+      # Install workspace dependencies
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build ngx-date-input
+
+      - run: pnpm publish dist/libs/ngx-cz-id --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
   publish-gpr:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      # Check out the repository
+      - uses: actions/checkout@v3
         with:
-          node-version: 16
+          fetch-depth: 0
+
+      # Install Pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.1
+        with:
+          version: "7.x"
+      # Install Node.js
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
           registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm run build ngx-date-input
-      - run: npm publish dist/ngx-date-input
+          cache: "pnpm"
+      # Install workspace dependencies
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build ngx-date-input
+
+      - run: pnpm publish dist/libs/ngx-cz-id --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
