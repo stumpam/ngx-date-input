@@ -1,11 +1,11 @@
-export interface TokenConfig {
-  [key: string]: {
+export type TokenConfig = {
+  [key in 'YYYY' | 'MM' | 'M' | 'DD' | 'D']: {
     min: number;
     max: number;
     role: TokenRole;
     leadingZero?: boolean;
   };
-}
+};
 
 export interface Token {
   role: TokenRole;
@@ -52,7 +52,7 @@ export interface DateInputOptions {
   disabledFn?: (
     date: Date | number,
     type: 'date' | 'month' | 'year',
-    year?: number,
+    year?: number
   ) => boolean;
 }
 

@@ -1,4 +1,6 @@
-export const normalizeDate = (date: string | Date) => {
+export function normalizeDate(date: undefined): undefined;
+export function normalizeDate(date: string | Date): Date;
+export function normalizeDate(date?: string | Date): Date | undefined {
   if (!date) return undefined;
 
   let normalizedDate: Date;
@@ -11,7 +13,7 @@ export const normalizeDate = (date: string | Date) => {
   normalizedDate.setHours(0, 0, 0, 0);
 
   return normalizedDate;
-};
+}
 
 export function lastDayOfNextMonth(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth() + 2, 0);

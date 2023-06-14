@@ -23,21 +23,20 @@ import {
 } from '../../interfaces/date-input.interface';
 
 @Component({
-  selector: 'ngx-date-input-calendar',
+  selector: 'ngx-date-input-calendar[options]',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // tslint:disable-next-line: no-host-metadata-property
   host: {
-    '[class.ngx-date-input-calendar]': 'true',
+    class: 'ngx-date-input-calendar',
     '(document:click)': 'hide($event.target)',
   },
 })
 export class CalendarComponent implements OnInit {
-  @Input() date: Date | null;
+  @Input() date: Date | null | undefined = null;
 
-  @Input() options: DateInputOptions = {} as DateInputOptions;
+  @Input() options!: DateInputOptions;
 
   @Output() selectionChange = new EventEmitter<Date>();
   @Output() hideCalendar = new EventEmitter<void>();
@@ -69,7 +68,7 @@ export class CalendarComponent implements OnInit {
 
   constructor(private readonly cd: ChangeDetectorRef) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     let edge = '';
 
     if (this.options.min && !this.options.maxAtEnd) {
@@ -130,7 +129,7 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  generateMonth(date: Date) {
+  generateMonth(date: Date): void {
     this.dates = [];
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     firstDay.setHours(0, 0, 0, 0);
@@ -161,7 +160,7 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  getClass(date: Date) {
+  getClass(date: Date): string {
     const notActiveMonth = this.isNotActiveMonth(date);
     const today = date.getTime() === this.today.getTime() ? 'today' : '';
     const selected = date.getTime() === this.date?.getTime() ? 'selected' : '';
@@ -173,7 +172,7 @@ export class CalendarComponent implements OnInit {
     return date.getMonth() === this.activeMonth.getMonth() ? '' : 'disabled';
   }
 
-  changeMonth(next = true) {
+  changeMonth(next = true): void {
     if (!this.showMonth(next)) return;
 
     this.activeMonth = next
@@ -184,7 +183,7 @@ export class CalendarComponent implements OnInit {
     this.cd.markForCheck();
   }
 
-  changeYear(next = true) {
+  changeYear(next = true): void {
     if (!this.showYear(next)) return;
 
     const nextYear = next ? 1 : -1;
@@ -192,7 +191,7 @@ export class CalendarComponent implements OnInit {
     this.cd.markForCheck();
   }
 
-  changeDecade(next = true) {
+  changeDecade(next = true): void {
     if (!this.showDecade(next)) return;
 
     const nextYear = next ? 9 : -9;
@@ -200,7 +199,7 @@ export class CalendarComponent implements OnInit {
     this.cd.markForCheck();
   }
 
-  toToday(setToday = false) {
+  toToday(setToday = false): void {
     if (setToday && this.view === 'month') {
       this.setDate(this.today);
 
@@ -212,7 +211,7 @@ export class CalendarComponent implements OnInit {
     this.toggleView('month');
   }
 
-  setDate(date: Date) {
+  setDate(date: Date): void {
     if (this.notActive(date) || this.options.disabledFn?.(date, 'date')) {
       return;
     }
@@ -224,7 +223,7 @@ export class CalendarComponent implements OnInit {
     this.selectionChange.emit(date);
   }
 
-  setMonth(month: number) {
+  setMonth(month: number): void {
     if (this.notActiveMonth(month)) {
       return;
     }
@@ -239,7 +238,7 @@ export class CalendarComponent implements OnInit {
     this.toggleView('month');
   }
 
-  setYear(year: number) {
+  setYear(year: number): void {
     if (this.notActiveYear(year) || this.options.disabledFn?.(year, 'year')) {
       return;
     }
@@ -248,12 +247,12 @@ export class CalendarComponent implements OnInit {
     this.toggleView('year');
   }
 
-  toggleView(view: CalendarView) {
+  toggleView(view: CalendarView): void {
     this.view = view;
     this.cd.markForCheck();
   }
 
-  hide(target: HTMLElement) {
+  hide(target: HTMLElement): void {
     if (this.skipVisibility) {
       this.skipVisibility = false;
 
@@ -270,13 +269,13 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  showMonth(next = true) {
+  showMonth(next = true): boolean {
     if (next && this.options.max) {
       const max = normalizeDate(this.options.max);
       const active = new Date(
         this.activeMonth.getFullYear(),
         this.activeMonth.getMonth() + 1,
-        1,
+        1
       );
       active.setHours(0, 0, 0, 0);
       if (active.getTime() > max.getTime()) {
@@ -289,7 +288,7 @@ export class CalendarComponent implements OnInit {
       const active = new Date(
         this.activeMonth.getFullYear(),
         this.activeMonth.getMonth(),
-        0,
+        0
       );
       active.setHours(0, 0, 0, 0);
       if (active.getTime() < min.getTime()) {
@@ -299,11 +298,11 @@ export class CalendarComponent implements OnInit {
     return true;
   }
 
-  showYear(next = true) {
+  showYear(next = true): boolean {
     if (next && this.options.max) {
       const max = normalizeDate(this.options.max);
       const active = normalizeDate(
-        new Date(this.activeMonth.getFullYear() + 1, 0, 1),
+        new Date(this.activeMonth.getFullYear() + 1, 0, 1)
       );
       if (active.getTime() > max.getTime()) {
         return false;
@@ -313,7 +312,7 @@ export class CalendarComponent implements OnInit {
       const min = normalizeDate(this.options.min);
 
       const active = normalizeDate(
-        new Date(this.activeMonth.getFullYear(), 0, 0),
+        new Date(this.activeMonth.getFullYear(), 0, 0)
       );
       if (active.getTime() < min.getTime()) {
         return false;
@@ -322,11 +321,11 @@ export class CalendarComponent implements OnInit {
     return true;
   }
 
-  showDecade(next = true) {
+  showDecade(next = true): boolean {
     if (next && this.options.max) {
       const max = normalizeDate(this.options.max);
       const active = normalizeDate(
-        new Date(this.activeMonth.getFullYear() + 5, 0, 1),
+        new Date(this.activeMonth.getFullYear() + 5, 0, 1)
       );
       if (active.getTime() > max.getTime()) {
         return false;
@@ -336,7 +335,7 @@ export class CalendarComponent implements OnInit {
       const min = normalizeDate(this.options.min);
 
       const active = normalizeDate(
-        new Date(this.activeMonth.getFullYear() - 4, 0, 0),
+        new Date(this.activeMonth.getFullYear() - 4, 0, 0)
       );
       if (active.getTime() < min.getTime()) {
         return false;
@@ -345,7 +344,7 @@ export class CalendarComponent implements OnInit {
     return true;
   }
 
-  notActive(date: Date) {
+  notActive(date: Date): boolean {
     if (this.options.disableWeekends) {
       const weekDay = date.getDay();
       if (weekDay === 6 || weekDay === 0) {
@@ -368,7 +367,7 @@ export class CalendarComponent implements OnInit {
     return false;
   }
 
-  notActiveMonth(month: number) {
+  notActiveMonth(month: number): boolean {
     if (
       this.options.disabledFn?.(month, 'month', this.activeMonth.getFullYear())
     ) {
@@ -398,7 +397,7 @@ export class CalendarComponent implements OnInit {
     return false;
   }
 
-  notActiveYear(year: number) {
+  notActiveYear(year: number): boolean {
     if (this.options.disabledFn?.(year, 'year')) {
       return true;
     }
@@ -420,7 +419,7 @@ export class CalendarComponent implements OnInit {
     return false;
   }
 
-  showToday() {
+  showToday(): boolean {
     if (this.options.disableWeekends) {
       const weekDay = this.today.getDay();
       if (weekDay === 6 || weekDay === 0) {
@@ -443,21 +442,21 @@ export class CalendarComponent implements OnInit {
     return true;
   }
 
-  fadeDate(date: Date) {
+  fadeDate(date: Date): boolean | undefined {
     return (
       this.options.disableOtherMonths &&
       this.activeMonth.getMonth() !== date.getMonth()
     );
   }
 
-  fadedDate(date: Date) {
+  fadedDate(date: Date): boolean | undefined {
     return (
       !this.options.disableOtherMonths &&
       this.activeMonth.getMonth() !== date.getMonth()
     );
   }
 
-  showDate(date: Date) {
+  showDate(date: Date): number | '' {
     return this.options.hideOtherMonths &&
       this.activeMonth.getMonth() !== date.getMonth()
       ? ''

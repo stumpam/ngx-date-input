@@ -1,36 +1,36 @@
 <input
-    #field
-    type="text"
-    [disabled]="disabled"
-    (blur)="onBlur()"
-    (click)="onClick()"
-    (input)="onInput($event.target.value)"
-    (keydown)="onKeyDown($event)"
+  #field
+  type="text"
+  [disabled]="disabled"
+  (blur)="onBlur()"
+  (click)="onClick()"
+  (input)="onInput($any($event).target.value)"
+  (keydown)="onKeyDown($event)"
 />
 <div class="clear-input" *ngIf="_options.showInputClear" (click)="resetInput()">
-    ×
+  ×
 </div>
-<ng-container [ngTemplateOutlet]="_options?.image ? image : content">
+<ng-container [ngTemplateOutlet]="_options.image ? image : content">
 </ng-container>
 
 <ngx-date-input-calendar
-    *ngIf="showCalendar"
-    (hideCalendar)="openCalendar(false)"
-    (selectionChange)="calendarEvent($event)"
-    (clear)="resetInput(true)"
-    [date]="date"
-    [options]="_options"
+  *ngIf="showCalendar"
+  (hideCalendar)="openCalendar(false)"
+  (selectionChange)="calendarEvent($event)"
+  (clear)="resetInput(true)"
+  [date]="date"
+  [options]="_options"
 >
 </ngx-date-input-calendar>
 
 <ng-template #image>
-    <div class="img">
-        <img src="*" (click)="openCalendar()" />
-    </div>
+  <div class="img">
+    <img src="*" (click)="openCalendar()" />
+  </div>
 </ng-template>
 
 <ng-template #content>
-    <div class="img" (click)="openCalendar()">
-        <ng-content></ng-content>
-    </div>
+  <div class="img" (click)="openCalendar()">
+    <ng-content></ng-content>
+  </div>
 </ng-template>

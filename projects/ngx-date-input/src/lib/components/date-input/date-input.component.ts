@@ -41,9 +41,8 @@ import { CalendarModule } from '../calendar/calendar.component';
   selector: 'ngx-date-input',
   templateUrl: './date-input.component.html',
   styleUrls: ['./date-input.component.scss'],
-  // tslint:disable-next-line: no-host-metadata-property
   host: {
-    '[class.ngx-date-input]': 'true',
+    class: 'ngx-date-input',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -66,7 +65,7 @@ export class DateInputComponent
   private init = true;
 
   @ViewChild('field', { static: true }) field!: ElementRef<HTMLInputElement>;
-  @Input() attributes = {} as Record<string, unknown>;
+  @Input() attributes: Record<string, string> = {};
   @Input() set options(options: DateInputOptions | null) {
     if (!options) return;
 
@@ -86,7 +85,7 @@ export class DateInputComponent
       ...options,
     };
 
-    if (update) {
+    if (update && this._options.tokens) {
       this.sections = parseString(this._options.format, this._options.tokens);
       if (this.date) {
         this.checkMinMax(true, true, true);
@@ -97,7 +96,7 @@ export class DateInputComponent
       }
     }
 
-    if (this.init && !update) {
+    if (this.init && !update && this._options.tokens) {
       this.sections = parseString(this._options.format, this._options.tokens);
       this.init = false;
     }
@@ -146,7 +145,7 @@ export class DateInputComponent
         leadingZero: false,
       },
     },
-  } as DateInputOptions;
+  };
 
   showCalendar = false;
 
@@ -170,7 +169,7 @@ export class DateInputComponent
 
   constructor(
     private readonly cd: ChangeDetectorRef,
-    private readonly renderer: Renderer2,
+    private readonly renderer: Renderer2
   ) {}
 
   ngOnInit() {
@@ -178,7 +177,7 @@ export class DateInputComponent
       this.renderer.setAttribute(
         this.field.nativeElement,
         attr,
-        value.toString(),
+        value.toString()
       );
     });
   }
@@ -273,7 +272,7 @@ export class DateInputComponent
   }
 
   updateSection(key: 'ArrowUp' | 'ArrowDown' | 'none') {
-    if (!this.date) return;
+    if (!this.date || typeof this.cursorPosition !== 'number') return;
 
     let pos = this.cursorPosition;
     let right = pos;
@@ -281,6 +280,8 @@ export class DateInputComponent
     let active = true;
 
     const value = this.sections.reduce((str, section) => {
+      if (!section.value) return str;
+
       let sectionValue = section.value;
 
       if (active && pos >= index && pos <= section.value.length + index) {
@@ -289,8 +290,8 @@ export class DateInputComponent
             const orig = +section.value;
             let num = key === 'ArrowUp' ? orig + 1 : orig - 1;
 
-            if (num > section.max) num--;
-            if (num < section.min) num++;
+            if (num > (section.max || 0)) num--;
+            if (num < (section.min || 0)) num++;
 
             sectionValue = padStart(num, section.leadingZero ? 2 : 1);
           }
@@ -316,7 +317,7 @@ export class DateInputComponent
     this.field.nativeElement.setSelectionRange(pos, right);
   }
 
-  onInput(value: string | Date) {
+  onInput(value: string | Date): void {
     if (!value || (typeof value === 'string' && value.length === 1)) {
       this.resetSections();
     }
@@ -338,22 +339,25 @@ export class DateInputComponent
 
     const { year, month, day } = this.sections.reduce(
       (prev, curr) => {
-        if (!curr.valid) return prev;
+        if (!curr.valid || curr.value === undefined) return prev;
         if (curr.role === TokenRole.day) prev.day = curr.value;
         if (curr.role === TokenRole.month) prev.month = curr.value;
         if (curr.role === TokenRole.year) prev.year = curr.value;
         return prev;
       },
-      { day: '', month: '', year: '' },
+      { day: '', month: '', year: '' }
     );
 
     let checkedDay = day;
     if (year && month && day) {
       const date = new Date(+year, +month, 0).getDate();
       if (+day > date) {
-        const section = this.sections.find(s => s.role === TokenRole.day);
-        section.value = date.toString();
-        checkedDay = section.value;
+        const section = this.sections.find((s) => s.role === TokenRole.day);
+
+        if (section) {
+          section.value = date.toString();
+          checkedDay = section.value;
+        }
       }
     }
 
@@ -408,7 +412,7 @@ export class DateInputComponent
       }
     }
 
-    if (update) {
+    if (update && this.date) {
       this.updateDateSection(this.date, true, true);
     }
   }
@@ -419,7 +423,7 @@ export class DateInputComponent
       this.date?.setHours((-1 * this.date.getTimezoneOffset()) / 60, 0, 0, 0);
       this.changeFn?.(
         (this.date && (this._options.iso ? dateToISO(this.date) : this.date)) ||
-          null,
+          null
       );
     }
 
@@ -427,7 +431,7 @@ export class DateInputComponent
   }
 
   resetSections() {
-    this.sections.map(s => {
+    this.sections.map((s) => {
       s.value = '';
       if (s.valid) {
         s.valid = false;
@@ -435,8 +439,8 @@ export class DateInputComponent
     });
   }
 
-  updateDateSection(newDate: Date, addDivider = false, valid = true) {
-    this.sections.map(s => {
+  updateDateSection(newDate: Date, addDivider = false, valid = true): void {
+    this.sections.map((s) => {
       if (s.role === TokenRole.day) {
         s.value = padStart(newDate.getDate(), s.leadingZero ? 2 : 1);
       } else if (s.role === TokenRole.month) {
@@ -457,8 +461,10 @@ export class DateInputComponent
     this.date = newDate;
   }
 
-  getSection(value: string, index: number, back: boolean) {
+  getSection(value: string, index: number, back: boolean): void {
     const section = this.sections[index];
+
+    if (!section.pattern) return;
 
     const last = index === this.sections.length - 1;
 
@@ -484,9 +490,11 @@ export class DateInputComponent
         const prevSection = this.sections[index - 1];
         if (
           prevSection.leadingZero &&
-          prevSection.value.length !== prevSection.pattern.length
+          prevSection.value?.length !== prevSection.pattern?.length &&
+          prevSection.value &&
+          prevSection.min !== undefined
         ) {
-          if (+prevSection.value < prevSection.min) {
+          if (+prevSection.value < prevSection?.min) {
             prevSection.value = prevSection.min.toString();
           }
           prevSection.value = padStart(prevSection.value, 2);
@@ -495,13 +503,13 @@ export class DateInputComponent
     } else {
       const { value: number, extra: numberExtra } = this.parseNumber(actual);
       extra = numberExtra + extra;
-      if (number) {
-        if (section.min > number && actualLength === number.length) {
+      if (number && section.min !== undefined && section.max !== undefined) {
+        if (section.min > +number && actualLength === number.length) {
           section.value = padStart(section.min, section.leadingZero ? 2 : 1);
-        } else if (section.max < number) {
+        } else if (section.max < +number) {
           section.value = section.max.toString();
-          if (!last && !extra) {
-            extra = this.sections[index + 1].pattern[0];
+          if (!last && !extra && this.sections[index + 1].pattern) {
+            extra = this.sections[index + 1].pattern![0];
           }
         } else {
           section.value = number;
@@ -518,7 +526,8 @@ export class DateInputComponent
             section.value.length === actualLength - 1);
       } else {
         if (
-          extra !== this.sections[index + 1]?.pattern[0] ||
+          (this.sections[index + 1]?.pattern &&
+            extra !== this.sections[index + 1]?.pattern![0]) ||
           (!back && Number.isNaN(+extra[0]) && !section.valid)
         ) {
           extra = '';
@@ -532,8 +541,8 @@ export class DateInputComponent
       section.leadingZero === false
     ) {
       section.value = section.value.replace(/^0/, '');
-      if (!last && !extra) {
-        extra = this.sections[index + 1].pattern[0];
+      if (!last && !extra && this.sections[index + 1].pattern) {
+        extra = this.sections[index + 1].pattern![0];
       }
     }
 
@@ -542,7 +551,7 @@ export class DateInputComponent
     }
   }
 
-  parseNumber(value: string, extra = '') {
+  parseNumber(value: string, extra = ''): { value: string; extra: string } {
     if (Number.isNaN(+value.replace('.', 'x'))) {
       return this.parseNumber(value.slice(0, -1), extra + value.slice(-1));
     } else {
@@ -550,30 +559,23 @@ export class DateInputComponent
     }
   }
 
-  buildString() {
-    return this.sections.map(s => s.value).join('');
+  buildString(): string {
+    return this.sections.map((s) => s.value).join('');
   }
 
-  parseValue(value: string) {
-    let x = 0;
-    while (value && x < 100) {
-      x++;
-    }
-  }
-
-  resetInput(closeCalendar = false) {
+  resetInput(closeCalendar = false): void {
     if (closeCalendar) {
       this.openCalendar(false);
     }
     this.onInput('');
   }
 
-  openCalendar(show = true) {
+  openCalendar(show = true): void {
     this.showCalendar = show;
     this.cd.markForCheck();
   }
 
-  calendarEvent(date: Date) {
+  calendarEvent(date: Date): void {
     this.setDate(date);
     this.showCalendar = false;
     this.cd.markForCheck();
@@ -589,29 +591,35 @@ export class DateInputComponent
       this._options.max &&
       isDateAfter(new Date(value), new Date(this._options.max));
 
+    const disabledValidation = this._options.disabledFn?.(
+      new Date(value),
+      'date'
+    );
+
     return {
       ...(minValidation && {
         dateInputMin: true,
       }),
+      ...(disabledValidation && { disabledValidation: true }),
       ...(maxValidation && {
         dateInputMax: true,
       }),
     };
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 }
 
-const parseString = (str: string, tokens: TokenConfig) => {
+const parseString = (str: string, tokens: TokenConfig): Token[] => {
   const tks: Token[] = [];
 
   let pos = 0;
   while (str) {
     const [name, token] = Object.entries(tokens).find(([key]) =>
-      str.startsWith(key),
+      str.startsWith(key)
     ) || ['', {} as TokenConfig];
 
     if (name) {
@@ -649,7 +657,7 @@ const parseString = (str: string, tokens: TokenConfig) => {
     const result = !!curr.role !== !!prev;
     if (!result)
       throw new Error(
-        'Datepicker pattern must combine numbers and dividers and not start by divider!',
+        'Datepicker pattern must combine numbers and dividers and not start by divider!'
       );
     return curr.role;
   }, 0);
@@ -657,7 +665,7 @@ const parseString = (str: string, tokens: TokenConfig) => {
   return tks;
 };
 
-const dateToISO = (date: Date) => {
+const dateToISO = (date: Date): string => {
   const month = (date.getMonth() + 1).toString();
   return `${date.getFullYear()}-${
     month.length === 1 ? '0' + month : month
