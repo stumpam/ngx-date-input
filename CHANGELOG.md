@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/stumpam/ngx-date-input/compare/v2.0.0...v2.1.0) (2023-06-14)
+
+
+### Features
+
+* **lib:** add strict mode and disabled date validation ([d3372a1](https://github.com/stumpam/ngx-date-input/commit/d3372a13a99707df574f3703c21c0a107ed3e492))
+
 ## [2.0.0](https://github.com/stumpam/ngx-date-input/compare/v1.12.16...v2.0.0) (2021-08-03)
 
 
