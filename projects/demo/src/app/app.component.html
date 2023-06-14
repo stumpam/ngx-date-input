@@ -1,0 +1,7 @@
+<ngx-date-input
+  #ctrl="ngModel"
+  [(ngModel)]="model"
+  [options]="options"
+></ngx-date-input>
+
+<div *ngIf="ctrl.invalid">Invalid</div>
