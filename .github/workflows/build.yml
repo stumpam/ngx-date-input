@@ -16,6 +16,6 @@ jobs:
     - name: Run node
       uses: actions/setup-node@v1
       with:
-        node-version: 12
+        node-version: 18
     - run: npm ci
     - run: npm run build ngx-date-input
