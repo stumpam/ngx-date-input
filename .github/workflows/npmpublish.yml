@@ -30,7 +30,7 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm build ngx-date-input
+        run: pnpm build
 
       - run: pnpm publish dist/ngx-date-input --no-git-checks
         env:
@@ -61,7 +61,7 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm build ngx-date-input
+        run: pnpm build
 
       - run: pnpm publish dist/ngx-date-input --no-git-checks
         env:
