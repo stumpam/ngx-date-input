@@ -36,6 +36,7 @@ import {
   TokenRole,
 } from '../../interfaces/date-input.interface';
 import { CalendarModule } from '../calendar/calendar.component';
+import { PositionDirective } from './position.directive';
 
 @Component({
   selector: 'ngx-date-input',
@@ -675,6 +676,6 @@ const dateToISO = (date: Date): string => {
 @NgModule({
   imports: [CalendarModule, CommonModule],
   exports: [DateInputComponent],
-  declarations: [DateInputComponent],
+  declarations: [DateInputComponent, PositionDirective],
 })
 export class NgxDateInputModule {}

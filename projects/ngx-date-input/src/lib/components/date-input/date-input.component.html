@@ -20,12 +20,13 @@
   (clear)="resetInput(true)"
   [date]="date"
   [options]="_options"
+  [ngxDatePosition]="field"
 >
 </ngx-date-input-calendar>
 
 <ng-template #image>
   <div class="img">
-    <img src="*" (click)="openCalendar()" />
+    <img alt="Open calendar" src="*" (click)="openCalendar()" />
   </div>
 </ng-template>
 
