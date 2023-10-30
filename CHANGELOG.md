@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/stumpam/ngx-date-input/compare/v2.1.0...v2.2.0) (2023-10-30)
+
+
+### Features
+
+* **lib:** change calendar position to dynamic ([3b045ec](https://github.com/stumpam/ngx-date-input/commit/3b045ec1d3061e810a0da696bf51b8110aad3add))
+
 ## [2.1.0](https://github.com/stumpam/ngx-date-input/compare/v2.0.0...v2.1.0) (2023-06-14)
 
 
