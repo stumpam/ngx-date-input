@@ -33,12 +33,11 @@ export class PositionDirective implements AfterViewInit {
       topPosition = top;
     } else {
       if (window.innerHeight > height) {
-        topPosition = (rect?.top || 0) - 2 - height;
+        topPosition = (rect?.top || 0) + window.scrollY - height;
       } else {
         topPosition = window.innerHeight - height / 2;
       }
     }
-    console.log(height, this.#elementRef.nativeElement, enough, topPosition);
 
     this.#renderer.setStyle(
       this.#elementRef.nativeElement,
