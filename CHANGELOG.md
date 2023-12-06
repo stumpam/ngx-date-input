@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.2](https://github.com/stumpam/ngx-date-input/compare/v2.2.1...v2.2.2) (2023-12-06)
+
+
+### Bug Fixes
+
+* **lib:** update position for enough space ([206b3cd](https://github.com/stumpam/ngx-date-input/commit/206b3cd742b5e435939f3e3a0dca91224e213a52))
+
 ### [2.2.1](https://github.com/stumpam/ngx-date-input/compare/v2.2.0...v2.2.1) (2023-12-06)
 
 

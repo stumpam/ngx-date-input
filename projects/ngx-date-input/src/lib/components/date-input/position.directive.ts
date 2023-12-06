@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core';
 
-import { ElementRef, OnInit } from '@angular/core';
+import { ElementRef } from '@angular/core';
 
 @Directive({
   selector: '[ngxDatePosition]',
@@ -30,7 +30,7 @@ export class PositionDirective implements AfterViewInit {
     let topPosition;
 
     if (enough) {
-      topPosition = top;
+      topPosition = top + window.scrollY;
     } else {
       if (window.innerHeight > height) {
         topPosition = (rect?.top || 0) + window.scrollY - height;
@@ -48,6 +48,11 @@ export class PositionDirective implements AfterViewInit {
       this.#elementRef.nativeElement,
       'left',
       `${left}px`
+    );
+    this.#renderer.setStyle(
+      this.#elementRef.nativeElement,
+      'visibility',
+      'visible'
     );
   }
 }
